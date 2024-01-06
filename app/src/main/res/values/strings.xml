@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NationalWeather</string>
+    <string name="home">home</string>
+    <string name="favorite">favorite</string>
 </resources>
