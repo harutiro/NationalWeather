@@ -14,12 +14,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
+import coil.decode.SvgDecoder
+import net.harutiro.nationalweather.core.widgets.Center
 import net.harutiro.nationalweather.features.home.api.NationwideWeatherApiImpl
 
 @Composable
@@ -31,30 +35,33 @@ fun NationwideWeatherCell(
 ) {
     Card(
         modifier = Modifier
-            .width(133.dp)
+            .width(72.dp)
             .height(172.dp),
+
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-// Image.
-            NationwideWeatherImage(
-                imageUrl = imageUrl,
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(80.dp)
-                    .shadow(1.dp)
-            )
-            // Temperature.
-            NationwideWeatherTemperature(
-                tempMax = tempMax,
-                tempMin = tempMin,
-            )
-            // City name.
-            NationwideWeatherCityName(
-                cityName = cityName,
-            )
+        Center {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                // Image.
+                NationwideWeatherImage(
+                    imageUrl = imageUrl,
+                    modifier = Modifier
+                        .width(80.dp)
+                        .height(80.dp)
+                        .shadow(1.dp)
+                )
+                // Temperature.
+                NationwideWeatherTemperature(
+                    tempMax = tempMax,
+                    tempMin = tempMin,
+                )
+                // City name.
+                NationwideWeatherCityName(
+                    cityName = cityName,
+                )
+            }
         }
     }
 }
@@ -64,8 +71,14 @@ fun NationwideWeatherImage(
     imageUrl: String,
     modifier: Modifier,
 ) {
+    val imageLoader = ImageLoader.Builder(LocalContext.current)
+        .components {
+            add(SvgDecoder.Factory())
+        }
+        .build()
+
     Image(
-        painter = rememberAsyncImagePainter(imageUrl),
+        painter = rememberAsyncImagePainter(imageUrl, imageLoader = imageLoader),
         contentDescription = null,
         modifier = modifier,
     )

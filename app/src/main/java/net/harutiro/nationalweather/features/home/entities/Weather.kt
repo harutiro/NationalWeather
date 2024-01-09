@@ -22,11 +22,11 @@ data class Temperature(
 )
 
 data class Min(
-    var celsius: Double,
-    var fahrenheit: Double,
+    var celsius: Double?,
+    var fahrenheit: Double?,
 )
 
 data class Max(
-    var celsius: Double,
-    var fahrenheit: Double,
+    var celsius: Double?,
+    var fahrenheit: Double?,
 )

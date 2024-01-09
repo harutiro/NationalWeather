@@ -73,6 +73,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     implementation("io.coil-kt:coil:2.5.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-svg:2.5.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 
 

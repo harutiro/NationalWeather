@@ -1,8 +1,8 @@
 package net.harutiro.nationalweather.features.home.api
 
 import android.util.Log
-import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import net.harutiro.nationalweather.features.home.entities.Weather
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,7 +39,6 @@ class NationwideWeatherApiImpl {
 
             if(response.isSuccessful) {
                 Timber.tag("OkHttp").d(response.body().toString())
-                Log.d("NationwideWeatherApiImpl",response.body().toString())
                 return response.body() ?: Weather(listOf(),"")
             } else {
                 Timber.tag("OkHttp").d(response.errorBody().toString())
