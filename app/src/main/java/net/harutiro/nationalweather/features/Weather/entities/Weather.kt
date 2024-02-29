@@ -3,7 +3,14 @@ package net.harutiro.nationalweather.features.Weather.entities
 data class Weather(
     var forecasts: List<Forecast>,
     var title: String,
-)
+    var cityId: CityId?,
+){
+    companion object{
+        fun getCityAcquisition(title:String): String {
+            return title.split(" ")[0]
+        }
+    }
+}
 
 data class Forecast(
     var date: String,
