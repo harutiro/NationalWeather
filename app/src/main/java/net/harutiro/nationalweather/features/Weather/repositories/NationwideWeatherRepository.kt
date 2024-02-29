@@ -10,11 +10,11 @@ class NationwideWeatherRepository {
     suspend fun getNationwideWeather(weathers:SnapshotStateList<Weather>) {
         for(i in CityId.values()) {
             Log.d("NationwideWeatherRepository",i.id + i.name + "を取得")
-            weathers.add(NationwideWeatherApiImpl.getNationwideWeather(i.id))
+            weathers.add(NationwideWeatherApiImpl.getNationwideWeather(i))
         }
     }
 
-    suspend fun getPrefectureWeather(prefecture:CityId) : Weather {
-        return NationwideWeatherApiImpl.getNationwideWeather(prefecture.id)
+    suspend fun getPrefectureWeather(city :CityId) : Weather {
+        return NationwideWeatherApiImpl.getNationwideWeather(city)
     }
 }

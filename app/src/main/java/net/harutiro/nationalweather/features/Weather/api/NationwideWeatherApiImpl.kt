@@ -2,6 +2,7 @@ package net.harutiro.nationalweather.features.Weather.api
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,7 +12,7 @@ import timber.log.Timber
 
 class NationwideWeatherApiImpl {
     companion object{
-        suspend fun getNationwideWeather(cityId:String) : Weather {
+        suspend fun getNationwideWeather(cityId:CityId) : Weather {
             // Timberを使う場合
             val logging = HttpLoggingInterceptor {
                 Timber.tag("OkHttp").d(it)
@@ -33,14 +34,16 @@ class NationwideWeatherApiImpl {
                 .build()
                 .create(NationwideWeatherApi::class.java)
 
-            val response = weatherService.getWeather(cityId)
+            val response = weatherService.getWeather(cityId.id)
 
-            if(response.isSuccessful) {
+            return if(response.isSuccessful) {
                 Timber.tag("OkHttp").d(response.body().toString())
-                return response.body() ?: Weather(listOf(),"")
+                val weather = response.body()
+                weather?.cityId = cityId
+                weather ?: Weather(listOf(),"", CityId.tokyo)
             } else {
                 Timber.tag("OkHttp").d(response.errorBody().toString())
-                return Weather(listOf(),"")
+                Weather(listOf(),"" , CityId.tokyo)
             }
         }
     }

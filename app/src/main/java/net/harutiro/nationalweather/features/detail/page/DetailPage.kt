@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.home.page
+package net.harutiro.nationalweather.features.detail.page
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -16,13 +16,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavHostController
-import net.harutiro.nationalweather.core.router.MainRoute
 import net.harutiro.nationalweather.features.Weather.entities.CityId
+import net.harutiro.nationalweather.features.detail.viewModel.DetailViewModel
+import net.harutiro.nationalweather.features.home.page.NationwideWeatherCell
 import net.harutiro.nationalweather.features.home.viewModel.HomeViewModel
 import java.lang.Double.NaN
 
 @Composable
-fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = viewModel()) {
+fun DetailPage(toBottomNavigationBar: () -> Unit, cityId: CityId , viewModel: DetailViewModel = viewModel()) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -30,27 +31,24 @@ fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = view
         modifier = Modifier
             .padding(all = 8.dp)
     ) {
-        items(viewModel.weathers) {
-            NationwideWeatherCell(
-                imageUrl = it.forecasts[0].image.url,
-                tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
-                tempMin = it.forecasts[0].temperature.min.celsius ?: NaN,
-                cityName = viewModel.getPrefecturalAcquisition(it.title),
-                goDetail = {
-                    toDetail(it.cityId ?:CityId.tokyo)
-                }
+        items(viewModel.weather.value?.forecasts ?: emptyList()) {
+            DetailWeatherCell(
+                imageUrl = it.image.url,
+                tempMax = it.temperature.max.celsius ?: NaN,
+                tempMin = it.temperature.min.celsius ?: NaN,
+                date = it.date,
             )
         }
     }
 
-    HomeLifecycleEvent()
+    DetailLifecycleEvent()
 }
 
 @Composable
-fun HomeLifecycleEvent(
+fun DetailLifecycleEvent(
     viewModel: HomeViewModel = viewModel(),
 ) {
-    HomeObserveLifecycleEvent { event ->
+    DetailObserveLifecycleEvent { event ->
         // 検出したイベントに応じた処理を実装する。
         when (event) {
             Lifecycle.Event.ON_CREATE -> viewModel.getWeather()
@@ -60,7 +58,7 @@ fun HomeLifecycleEvent(
 }
 
 @Composable
-fun HomeObserveLifecycleEvent(onEvent: (Lifecycle.Event) -> Unit = {}) {
+fun DetailObserveLifecycleEvent(onEvent: (Lifecycle.Event) -> Unit = {}) {
     // Safely update the current lambdas when a new one is provided
     val currentOnEvent by rememberUpdatedState(onEvent)
     val lifecycleOwner = LocalLifecycleOwner.current

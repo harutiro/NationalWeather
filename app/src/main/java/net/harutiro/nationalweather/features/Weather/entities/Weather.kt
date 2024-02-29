@@ -3,6 +3,7 @@ package net.harutiro.nationalweather.features.Weather.entities
 data class Weather(
     var forecasts: List<Forecast>,
     var title: String,
+    var cityId: CityId?,
 )
 
 data class Forecast(
