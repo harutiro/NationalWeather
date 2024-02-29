@@ -13,4 +13,8 @@ class NationwideWeatherRepository {
             weathers.add(NationwideWeatherApiImpl.getNationwideWeather(i.id))
         }
     }
+
+    suspend fun getPrefectureWeather(prefecture:CityId) : Weather {
+        return NationwideWeatherApiImpl.getNationwideWeather(prefecture.id)
+    }
 }
