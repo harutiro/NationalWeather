@@ -1,5 +1,6 @@
 package net.harutiro.nationalweather.features.detail.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,9 @@ class DetailViewModel : ViewModel() {
     val weather = mutableStateOf<Weather?>(null)
     val city = mutableStateOf<CityId?>(null)
     fun getWeather(cityId: CityId) {
+
+        Log.d("DetailViewModel", "cityId: $cityId")
+
         viewModelScope.launch {
             val nationwideWeatherRepository = NationwideWeatherRepository()
             // 参照渡しを行い、実際にはRepository側でweathersに追加している

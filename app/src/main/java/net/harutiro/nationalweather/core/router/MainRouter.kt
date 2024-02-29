@@ -18,6 +18,7 @@ fun MainRouter() {
         composable(MainRoute.BOTTOM_NAVIGATION_BAR.route){
             BottomNavigationBarRouter(
                 toDetail = { cityId ->
+                    Log.d("MainRouter", "cityId: ${cityId.id}")
                     mainNavController.navigate("${MainRoute.DETAIL.route}/${cityId.id}")
                 }
             )
@@ -27,13 +28,13 @@ fun MainRouter() {
             arguments = listOf(navArgument("cityId") { type = NavType.StringType })
         ){
             val cityId: CityId? = CityId.idToCityId(
-                mainNavController.previousBackStackEntry?.arguments?.getString("cityId") ?:""
+                it.arguments?.getString("cityId") ?:""
             )
             if(cityId != null){
                 DetailPage(
                     cityId = cityId,
                     toBottomNavigationBar = {
-
+                        mainNavController.popBackStack()
                     }
                 )
             }else{

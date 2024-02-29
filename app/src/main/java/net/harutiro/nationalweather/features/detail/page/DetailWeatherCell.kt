@@ -130,7 +130,6 @@ fun WeatherDate(
         style = TextStyle(
             fontSize = 25.sp,
             lineHeight = 22.5.sp,
-            color = Color(0xFF000000),
             textAlign = TextAlign.Center,
         )
     )
