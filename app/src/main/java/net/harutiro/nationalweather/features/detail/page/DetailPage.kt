@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavHostController
+import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.core.widgets.ArrowBackButton
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
@@ -86,7 +87,7 @@ fun Detail3DaysList(
                 imageUrl = it.image.url,
                 tempMax = it.temperature.max.celsius ?: NaN,
                 tempMin = it.temperature.min.celsius ?: NaN,
-                date = it.date,
+                date = DateUtils.apiDateToJapaneseNotation(it.date),
             )
         }
     }
