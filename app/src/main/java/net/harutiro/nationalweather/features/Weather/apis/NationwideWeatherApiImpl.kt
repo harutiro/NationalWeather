@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.Weather.api
+package net.harutiro.nationalweather.features.Weather.apis
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

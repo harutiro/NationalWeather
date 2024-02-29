@@ -2,7 +2,7 @@ package net.harutiro.nationalweather.features.Weather.repositories
 
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import net.harutiro.nationalweather.features.Weather.api.NationwideWeatherApiImpl
+import net.harutiro.nationalweather.features.Weather.apis.NationwideWeatherApiImpl
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
 
