@@ -20,6 +20,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavHostController
 import net.harutiro.nationalweather.core.router.MainRoute
 import net.harutiro.nationalweather.features.Weather.entities.CityId
+import net.harutiro.nationalweather.features.Weather.entities.Weather
 import net.harutiro.nationalweather.features.home.viewModel.HomeViewModel
 import java.lang.Double.NaN
 
@@ -42,7 +43,7 @@ fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = view
                 imageUrl = it.forecasts[0].image.url,
                 tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
                 tempMin = it.forecasts[0].temperature.min.celsius ?: NaN,
-                cityName = viewModel.getPrefecturalAcquisition(it.title),
+                cityName = Weather.getCityAcquisition(it.title),
                 goDetail = {
                     Log.d("HomePage", "cityId: ${it.cityId}")
                     toDetail(it.cityId ?:CityId.tokyo)

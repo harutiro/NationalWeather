@@ -19,15 +19,4 @@ class HomeViewModel : ViewModel() {
             nationwideWeatherRepository.getNationwideWeather(weathers)
         }
     }
-
-    fun getPrefecturalAcquisition(prefactural:String) : String {
-        return prefactural.split(" ")[0]
-    }
-
-    fun goDetail(cityId: CityId) {
-        // ここでDetail画面に遷移する処理を実装する
-        Log.d("HomeViewModel","goDetail: $cityId")
-
-
-    }
 }
