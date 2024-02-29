@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,10 +23,12 @@ import androidx.navigation.compose.rememberNavController
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.entities.BottomNavigationItem
 import net.harutiro.nationalweather.core.presenter.BottomNavigationBar
+import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.favorite.page.FavoritePage
 import net.harutiro.nationalweather.features.home.page.HomePage
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNavigationBarRouter(toDetail: (cityId: CityId) -> Unit){
     val navController = rememberNavController()
@@ -34,33 +39,42 @@ fun BottomNavigationBarRouter(toDetail: (cityId: CityId) -> Unit){
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Filled.Home,
             hasNews = false,
-            badgeCount = null
+            badgeCount = null,
+            path = BottomNavigationBarRoute.HOME
         ),
         BottomNavigationItem(
             title = stringResource(id = R.string.favorite),
             selectedIcon = Icons.Filled.Favorite,
             unselectedIcon = Icons.Filled.Favorite,
             hasNews = false,
-            badgeCount = null
+            badgeCount = null,
+            path = BottomNavigationBarRoute.FAVORITE
         )
     )
 
     var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
 
     Scaffold(
+        topBar = {
+            TopAppBar(title = {
+                val now = DateUtils.getNowString()
+                Text(text = "$now の全国天気") // 今日の日付(曜日)　の天気(
+
+            })
+        },
         bottomBar = {
             BottomNavigationBar(
                 items = bottomNavigationItems,
                 selectedItemIndex = selectedItemIndex
             ) { index ->
                 selectedItemIndex = index
-                navController.navigate(bottomNavigationItems[index].title)
+                navController.navigate(bottomNavigationItems[index].path.route)
             }
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = bottomNavigationItems[selectedItemIndex].title,
+            startDestination = bottomNavigationItems[selectedItemIndex].path.route,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
