@@ -27,6 +27,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.entities.BottomNavigationItem
+import net.harutiro.nationalweather.core.router.BottomNavigationBarRoute
 import net.harutiro.nationalweather.features.favorite.page.FavoritePage
 import net.harutiro.nationalweather.features.home.page.HomePage
 import net.harutiro.nationalweather.ui.theme.NationalWeatherTheme
@@ -100,14 +101,16 @@ fun GreetingPreview() {
                     selectedIcon = Icons.Filled.Home,
                     unselectedIcon = Icons.Filled.Home,
                     hasNews = false,
-                    badgeCount = null
+                    badgeCount = null,
+                    path = BottomNavigationBarRoute.HOME
                 ),
                 BottomNavigationItem(
                     title = stringResource(id = R.string.favorite),
                     selectedIcon = Icons.Filled.Favorite,
                     unselectedIcon = Icons.Filled.Favorite,
                     hasNews = false,
-                    badgeCount = null
+                    badgeCount = null,
+                    path = BottomNavigationBarRoute.FAVORITE
                 )
             ),
             selectedItemIndex = 0,
