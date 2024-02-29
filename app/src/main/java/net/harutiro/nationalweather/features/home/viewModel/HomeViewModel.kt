@@ -1,12 +1,11 @@
 package net.harutiro.nationalweather.features.home.viewModel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import net.harutiro.nationalweather.features.home.entities.Weather
-import net.harutiro.nationalweather.features.home.repositories.NationwideWeatherRepository
+import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepository
 
 class HomeViewModel : ViewModel() {
     val weathers = mutableStateListOf<Weather>()

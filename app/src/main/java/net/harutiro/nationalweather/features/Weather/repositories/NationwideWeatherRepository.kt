@@ -1,10 +1,10 @@
-package net.harutiro.nationalweather.features.home.repositories
+package net.harutiro.nationalweather.features.Weather.repositories
 
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import net.harutiro.nationalweather.features.home.api.NationwideWeatherApiImpl
-import net.harutiro.nationalweather.features.home.entities.CityId
-import net.harutiro.nationalweather.features.home.entities.Weather
+import net.harutiro.nationalweather.features.Weather.api.NationwideWeatherApiImpl
+import net.harutiro.nationalweather.features.Weather.entities.CityId
+import net.harutiro.nationalweather.features.Weather.entities.Weather
 
 class NationwideWeatherRepository {
     suspend fun getNationwideWeather(weathers:SnapshotStateList<Weather>) {

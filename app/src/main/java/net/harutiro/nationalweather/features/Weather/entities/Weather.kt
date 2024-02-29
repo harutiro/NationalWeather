@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.home.entities
+package net.harutiro.nationalweather.features.Weather.entities
 
 data class Weather(
     var forecasts: List<Forecast>,

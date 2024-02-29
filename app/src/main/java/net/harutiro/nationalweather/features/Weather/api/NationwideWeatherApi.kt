@@ -1,10 +1,7 @@
-package net.harutiro.nationalweather.features.home.api
+package net.harutiro.nationalweather.features.Weather.api
 
-import net.harutiro.nationalweather.features.home.entities.Weather
-import okhttp3.ResponseBody
-import retrofit2.Call
+import net.harutiro.nationalweather.features.Weather.entities.Weather
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Path
 

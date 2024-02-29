@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.home.entities
+package net.harutiro.nationalweather.features.Weather.entities
 
 enum class CityId(val id: String) {
     hokkaido("016010"),

@@ -1,12 +1,10 @@
-package net.harutiro.nationalweather.features.home.api
+package net.harutiro.nationalweather.features.Weather.api
 
-import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import net.harutiro.nationalweather.features.home.entities.Weather
+import net.harutiro.nationalweather.features.Weather.entities.Weather
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
