@@ -28,8 +28,8 @@ import androidx.navigation.compose.rememberNavController
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.entities.BottomNavigationItem
 import net.harutiro.nationalweather.core.router.BottomNavigationBarRoute
-import net.harutiro.nationalweather.features.favorite.page.FavoritePage
-import net.harutiro.nationalweather.features.home.page.HomePage
+import net.harutiro.nationalweather.core.presenter.favorite.page.FavoritePage
+import net.harutiro.nationalweather.core.presenter.home.page.HomePage
 import net.harutiro.nationalweather.ui.theme.NationalWeatherTheme
 @Composable
 fun BottomNavigationBar(

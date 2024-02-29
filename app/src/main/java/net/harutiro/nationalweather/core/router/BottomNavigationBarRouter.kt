@@ -25,8 +25,8 @@ import net.harutiro.nationalweather.core.entities.BottomNavigationItem
 import net.harutiro.nationalweather.core.presenter.BottomNavigationBar
 import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.features.Weather.entities.CityId
-import net.harutiro.nationalweather.features.favorite.page.FavoritePage
-import net.harutiro.nationalweather.features.home.page.HomePage
+import net.harutiro.nationalweather.core.presenter.favorite.page.FavoritePage
+import net.harutiro.nationalweather.core.presenter.home.page.HomePage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

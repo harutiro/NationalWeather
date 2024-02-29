@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.home.page
+package net.harutiro.nationalweather.core.presenter.home.page
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,7 @@ import androidx.navigation.NavHostController
 import net.harutiro.nationalweather.core.router.MainRoute
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
-import net.harutiro.nationalweather.features.home.viewModel.HomeViewModel
+import net.harutiro.nationalweather.core.presenter.home.viewModel.HomeViewModel
 import java.lang.Double.NaN
 
 @Composable

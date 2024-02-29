@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import net.harutiro.nationalweather.features.Weather.entities.CityId
-import net.harutiro.nationalweather.features.detail.page.DetailPage
+import net.harutiro.nationalweather.core.presenter.detail.page.DetailPage
 
 @Composable
 fun MainRouter() {

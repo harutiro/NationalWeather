@@ -1,9 +1,7 @@
-package net.harutiro.nationalweather.features.home.page
+package net.harutiro.nationalweather.core.presenter.detail.page
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -11,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,55 +26,55 @@ import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import net.harutiro.nationalweather.core.widgets.Center
-import timber.log.Timber
 
 @Composable
-fun NationwideWeatherCell(
+fun DetailWeatherCell(
     imageUrl: String,
     tempMax: Double,
     tempMin: Double,
-    cityName: String,
-    goDetail: () -> Unit,
+    date: String,
 ) {
     Card(
-        onClick = {
-            // ここでDetail画面に遷移する処理を実装する
-            goDetail()
-        },
         modifier = Modifier
             .width(72.dp)
             .height(172.dp),
 
-    ) {
+        ) {
         Center {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(32.dp),
             ) {
                 // Image.
-                NationwideWeatherImage(
+                WeatherImage(
                     imageUrl = imageUrl,
                     modifier = Modifier
                         .width(80.dp)
                         .height(80.dp)
                         .shadow(1.dp)
                 )
-                // Temperature.
-                NationwideWeatherTemperature(
-                    tempMax = tempMax,
-                    tempMin = tempMin,
-                )
-                // City name.
-                NationwideWeatherCityName(
-                    cityName = cityName,
-                )
+
+                Column (
+                    verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
+                    horizontalAlignment = Alignment.End,
+                ){
+                    // City name.
+                    WeatherDate(
+                        date = date,
+                    )
+                    // Temperature.
+                    WeatherTemperature(
+                        tempMax = tempMax,
+                        tempMin = tempMin,
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun NationwideWeatherImage(
+fun WeatherImage(
     imageUrl: String,
     modifier: Modifier,
 ) {
@@ -95,7 +92,7 @@ fun NationwideWeatherImage(
 }
 
 @Composable
-fun NationwideWeatherTemperature(
+fun WeatherTemperature(
     tempMax: Double,
     tempMin: Double,
 ) {
@@ -125,10 +122,17 @@ fun NationwideWeatherTemperature(
 }
 
 @Composable
-fun NationwideWeatherCityName(
-    cityName: String,
+fun WeatherDate(
+    date: String,
 ) {
-    Text(text = cityName)
+    Text(
+        text = date,
+        style = TextStyle(
+            fontSize = 25.sp,
+            lineHeight = 22.5.sp,
+            textAlign = TextAlign.Center,
+        )
+    )
 }
 
 
@@ -137,21 +141,16 @@ fun NationwideWeatherCityName(
 fun PreviewNationwideWeatherCell() {
     // 横幅と縦幅を指定してプレビューを表示する。
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .padding(all = 8.dp)
+        columns = GridCells.Fixed(1),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier.padding(all = 16.dp)
     ) {
-        items(4) {
-            NationwideWeatherCell(
+        items(3) {
+            DetailWeatherCell(
                 imageUrl = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
                 tempMax = 30.0,
                 tempMin = 20.0,
-                cityName = "東京都",
-                goDetail = {
-                    Timber.tag("NationwideWeatherCell").d("goDetail")
-                }
+                date = "10月23日(水)",
             )
         }
     }

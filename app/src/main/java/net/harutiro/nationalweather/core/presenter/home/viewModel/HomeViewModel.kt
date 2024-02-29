@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.home.viewModel
+package net.harutiro.nationalweather.core.presenter.home.viewModel
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf

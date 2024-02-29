@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.favorite.page
+package net.harutiro.nationalweather.core.presenter.favorite.page
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text

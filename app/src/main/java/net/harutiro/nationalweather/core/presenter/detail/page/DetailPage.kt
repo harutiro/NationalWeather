@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.detail.page
+package net.harutiro.nationalweather.core.presenter.detail.page
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -33,9 +33,9 @@ import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.core.widgets.ArrowBackButton
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
-import net.harutiro.nationalweather.features.detail.viewModel.DetailViewModel
-import net.harutiro.nationalweather.features.home.page.NationwideWeatherCell
-import net.harutiro.nationalweather.features.home.viewModel.HomeViewModel
+import net.harutiro.nationalweather.core.presenter.detail.viewModel.DetailViewModel
+import net.harutiro.nationalweather.core.presenter.home.page.NationwideWeatherCell
+import net.harutiro.nationalweather.core.presenter.home.viewModel.HomeViewModel
 import java.lang.Double.NaN
 
 @OptIn(ExperimentalMaterial3Api::class)
