@@ -11,6 +11,12 @@
       <entry key="PreviewNationwideWeatherCell (1)">
         <State />
       </entry>
+      <entry key="PreviewNationwideWeatherCell (2)">
+        <State />
+      </entry>
+      <entry key="PreviewPrefectureFavoriteWeatherCell">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <runningDeviceTargetSelectedWithDropDown>

@@ -11,26 +11,10 @@ import net.harutiro.nationalweather.features.Weather.entities.CityId
 @Composable
 fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
     Column {
-        Button(
-            onClick = {
-                viewModel.getAll()
-            }
-        ){
+        Button(onClick = {
+            viewModel.getAll()
+        }) {
             Text("Get All")
-        }
-        Button(
-            onClick = {
-                viewModel.insert(CityId.tokyo)
-            }
-        ){
-            Text("Insert")
-        }
-        Button(
-            onClick = {
-                viewModel.delete(CityId.tokyo)
-            }
-        ){
-            Text("Delete")
         }
     }
 }
