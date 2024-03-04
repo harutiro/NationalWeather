@@ -2,13 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="GreetingPreview">
+      <entry key="BookmarkButtonPreview">
         <State />
       </entry>
-      <entry key="PreviewNationwideWeatherCell">
+      <entry key="FavoriteButtonPreview">
         <State />
       </entry>
       <entry key="PreviewNationwideWeatherCell (1)">
+        <State />
+      </entry>
+      <entry key="PreviewNationwideWeatherCell (2)">
+        <State />
+      </entry>
+      <entry key="PreviewPrefectureFavoriteWeatherCell">
         <State />
       </entry>
       <entry key="app">

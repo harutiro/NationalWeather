@@ -2,4 +2,5 @@
     <string name="app_name">NationalWeather</string>
     <string name="home">全国天気</string>
     <string name="favorite">お気に入り</string>
+    <string name="empty_text">お気に入りがありません</string>
 </resources>

@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.Weather.api
+package net.harutiro.nationalweather.features.Weather.apis
 
 import net.harutiro.nationalweather.features.Weather.entities.Weather
 import retrofit2.Response
