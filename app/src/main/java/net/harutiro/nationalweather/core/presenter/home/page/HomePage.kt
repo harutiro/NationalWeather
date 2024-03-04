@@ -29,7 +29,7 @@ import java.lang.Double.NaN
 @Composable
 fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = viewModel()) {
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(key1 = viewModel.weathers){
         viewModel.getWeather()
     }
 
@@ -44,7 +44,7 @@ fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = view
                     modifier = Modifier
                         .padding(padding)
                 ) {
-                    items(viewModel.weathers) {
+                    items(viewModel.weathers, key = { it.cityId?.id ?: CityId.tokyo.id }) {
                         NationwideWeatherCell(
                             imageUrl = it.forecasts[0].image.url,
                             tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
