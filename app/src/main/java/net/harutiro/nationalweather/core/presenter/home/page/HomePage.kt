@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -31,24 +32,26 @@ fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = view
         viewModel.getWeather()
     }
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .padding(all = 8.dp)
-    ) {
-        items(viewModel.weathers) {
-            NationwideWeatherCell(
-                imageUrl = it.forecasts[0].image.url,
-                tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
-                tempMin = it.forecasts[0].temperature.min.celsius ?: NaN,
-                cityName = Weather.getCityAcquisition(it.title),
-                goDetail = {
-                    Log.d("HomePage", "cityId: ${it.cityId}")
-                    toDetail(it.cityId ?:CityId.tokyo)
-                }
-            )
+    Scaffold { padding ->
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .padding(padding)
+        ) {
+            items(viewModel.weathers) {
+                NationwideWeatherCell(
+                    imageUrl = it.forecasts[0].image.url,
+                    tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
+                    tempMin = it.forecasts[0].temperature.min.celsius ?: NaN,
+                    cityName = Weather.getCityAcquisition(it.title),
+                    goDetail = {
+                        Log.d("HomePage", "cityId: ${it.cityId}")
+                        toDetail(it.cityId ?:CityId.tokyo)
+                    }
+                )
+            }
         }
     }
 }

@@ -8,22 +8,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -40,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
+import net.harutiro.nationalweather.core.presenter.widget.BookmarkButton
 import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.core.widgets.Center
 import net.harutiro.nationalweather.features.Weather.entities.Forecast
@@ -51,13 +45,16 @@ import net.harutiro.nationalweather.features.Weather.entities.Weather
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrefectureFavoriteWeatherCell(
-    weather:Weather
+    modifier: Modifier = Modifier,
+    weather:Weather,
+    isFavorite: Boolean,
+    favoriteOnClick: () -> Unit,
 ){
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
-        modifier = Modifier
+        modifier = modifier
             .wrapContentHeight(),
         content = {
             Column(
@@ -75,6 +72,13 @@ fun PrefectureFavoriteWeatherCell(
                                 textAlign = TextAlign.Center,
                             )
                         )
+                    },
+                    actions = {
+                        BookmarkButton(
+                            isBookmark = isFavorite,
+                        ) {
+                            favoriteOnClick()
+                        }
                     },
                 )
 
@@ -286,8 +290,9 @@ fun PreviewPrefectureFavoriteWeatherCell() {
     ) {
         items(3) {
             PrefectureFavoriteWeatherCell(
-                weather = weather
-            )
+                weather = weather,
+                isFavorite = true,
+            ) {}
         }
     }
 }

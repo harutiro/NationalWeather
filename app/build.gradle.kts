@@ -90,8 +90,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("io.coil-kt:coil-svg:2.5.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-
-
+    implementation("androidx.compose.material:material-icons-extended:1.6.2")
 
     // Retrofit
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
