@@ -34,13 +34,17 @@ import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.core.presenter.favorite.page.FavoritePage
 import net.harutiro.nationalweather.core.presenter.home.page.HomePage
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class
 )
 @Composable
-fun BottomNavigationBarRouter(toDetail: (cityId: CityId) -> Unit){
+fun BottomNavigationBarRouter(
+    toDetail: (cityId: CityId) -> Unit,
+    viewModel: BottomNavigationBarRouterViewModel = viewModel()
+){
 
     val weatherFavoriteRepository = WeatherFavoriteRepository()
 
@@ -65,13 +69,13 @@ fun BottomNavigationBarRouter(toDetail: (cityId: CityId) -> Unit){
         )
     )
 
-    var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
-
-    // お気に入りがある場合はお気に入りタブを選択状態にする
-    LaunchedEffect(Unit) {
-        val favoriteList = weatherFavoriteRepository.getFavoriteList().await()
-        if (favoriteList.isNotEmpty()) {
-            selectedItemIndex = 1
+    LaunchedEffect(weatherFavoriteRepository) {
+        if(!viewModel.isStarted.value){
+            val favoriteList = weatherFavoriteRepository.getFavoriteList().await()
+            if (favoriteList.isNotEmpty()) {
+                viewModel.selectedItemIndex.intValue = 1
+            }
+            viewModel.isStarted.value = true
         }
     }
 
@@ -86,16 +90,16 @@ fun BottomNavigationBarRouter(toDetail: (cityId: CityId) -> Unit){
         bottomBar = {
             BottomNavigationBar(
                 items = bottomNavigationItems,
-                selectedItemIndex = selectedItemIndex
+                selectedItemIndex = viewModel.selectedItemIndex.intValue
             ) { index ->
-                selectedItemIndex = index
+                viewModel.selectedItemIndex.intValue = index
                 navController.navigate(bottomNavigationItems[index].path.route)
             }
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = bottomNavigationItems[selectedItemIndex].path.route,
+            startDestination = bottomNavigationItems[viewModel.selectedItemIndex.intValue].path.route,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
