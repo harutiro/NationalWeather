@@ -85,8 +85,8 @@ fun PrefectureFavoriteWeatherCell(
                 for(dayWeather in weather.forecasts){
                     FavoriteWeatherCell(
                         imageUrl = dayWeather.image.url,
-                        tempMax = dayWeather.temperature.max.celsius ?: 0.0,
-                        tempMin = dayWeather.temperature.min.celsius ?: 0.0,
+                        tempMax = dayWeather.temperature.max.celsius ?: Double.NaN,
+                        tempMin = dayWeather.temperature.min.celsius ?: Double.NaN,
                         date = DateUtils.apiDateToJapaneseNotation(dayWeather.date),
                     )
                 }
