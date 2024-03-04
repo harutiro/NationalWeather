@@ -23,35 +23,41 @@ import net.harutiro.nationalweather.core.router.MainRoute
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
 import net.harutiro.nationalweather.core.presenter.home.viewModel.HomeViewModel
+import net.harutiro.nationalweather.core.presenter.widget.LoadingPage
 import java.lang.Double.NaN
 
 @Composable
 fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = viewModel()) {
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(key1 = viewModel.weathers){
         viewModel.getWeather()
     }
 
     Scaffold { padding ->
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
-                .padding(padding)
-        ) {
-            items(viewModel.weathers) {
-                NationwideWeatherCell(
-                    imageUrl = it.forecasts[0].image.url,
-                    tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
-                    tempMin = it.forecasts[0].temperature.min.celsius ?: NaN,
-                    cityName = Weather.getCityAcquisition(it.title),
-                    goDetail = {
-                        Log.d("HomePage", "cityId: ${it.cityId}")
-                        toDetail(it.cityId ?:CityId.tokyo)
+        LoadingPage(
+            isLoading = viewModel.isLoading.value,
+            content = {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier
+                        .padding(padding)
+                ) {
+                    items(viewModel.weathers, key = { it.cityId?.id ?: CityId.tokyo.id }) {
+                        NationwideWeatherCell(
+                            imageUrl = it.forecasts[0].image.url,
+                            tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
+                            tempMin = it.forecasts[0].temperature.min.celsius ?: NaN,
+                            cityName = Weather.getCityAcquisition(it.title),
+                            goDetail = {
+                                Log.d("HomePage", "cityId: ${it.cityId}")
+                                toDetail(it.cityId ?:CityId.tokyo)
+                            }
+                        )
                     }
-                )
+                }
             }
-        }
+        )
     }
 }

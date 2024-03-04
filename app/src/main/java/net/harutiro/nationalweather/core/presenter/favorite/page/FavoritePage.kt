@@ -29,6 +29,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.presenter.favorite.viewModel.FavoriteViewModel
+import net.harutiro.nationalweather.core.presenter.widget.LoadingPage
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 
 @OptIn(DelicateCoroutinesApi::class, ExperimentalFoundationApi::class)
@@ -46,49 +47,53 @@ fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
     Scaffold (
         snackbarHost = { SnackbarHost(hostState) },
     ){ padding ->
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .padding( padding )
+        LoadingPage(
+            isLoading = viewModel.isLoading.value,
         ) {
-            items(
-                viewModel.weatherList.toList(),
-                key = { it.cityId?.id ?: CityId.tokyo.id }
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .padding( padding )
             ) {
-                PrefectureFavoriteWeatherCell(
-                    modifier = Modifier.animateItemPlacement(),
-                    weather = it,
-                    isFavorite = viewModel.checkFavorite(it.cityId ?: CityId.tokyo),
-                    favoriteOnClick = {
-                        GlobalScope.launch {
-                            viewModel.updateBookmark(cityId = it.cityId ?: CityId.tokyo) {
-                                scope.launch {
-                                    // スナックバーが表示された後にスナックバーが呼ばれたら前のスナックバーをキャンセルする
-                                    hostState.currentSnackbarData?.dismiss()
-                                    hostState.showSnackbar(it)
+                items(
+                    viewModel.weatherList.toList(),
+                    key = { it.cityId?.id ?: CityId.tokyo.id }
+                ) {
+                    PrefectureFavoriteWeatherCell(
+                        modifier = Modifier.animateItemPlacement(),
+                        weather = it,
+                        isFavorite = viewModel.checkFavorite(it.cityId ?: CityId.tokyo),
+                        favoriteOnClick = {
+                            GlobalScope.launch {
+                                viewModel.updateBookmark(cityId = it.cityId ?: CityId.tokyo) {
+                                    scope.launch {
+                                        // スナックバーが表示された後にスナックバーが呼ばれたら前のスナックバーをキャンセルする
+                                        hostState.currentSnackbarData?.dismiss()
+                                        hostState.showSnackbar(it)
+                                    }
                                 }
                             }
                         }
-                    }
-                )
+                    )
+                }
             }
-        }
 
-        if (viewModel.weatherList.isEmpty()) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = stringResource(id = R.string.empty_text),
-                )
-                Text(
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge,
-                    text ="(人；´Д｀)ｺﾞﾒﾝﾈ"
-                )
+            if (viewModel.weatherList.isEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        textAlign = TextAlign.Center,
+                        text = stringResource(id = R.string.empty_text),
+                    )
+                    Text(
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleLarge,
+                        text ="(人；´Д｀)ｺﾞﾒﾝﾈ"
+                    )
+                }
             }
         }
     }

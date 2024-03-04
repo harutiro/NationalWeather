@@ -25,14 +25,16 @@ class FavoriteViewModel(
     val cityList = mutableStateListOf<WeatherFavoriteEntity>()
     val weatherList = mutableStateListOf<Weather>()
 
+    val isLoading = mutableStateOf(false)
+
     suspend fun getWeather(cityId: CityId): Weather {
         Log.d("FavoriteViewModel", "cityId: $cityId")
         return weatherRepository.getPrefectureWeather(cityId)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun getFavoriteAll() {
         Log.d("FavoriteViewModel", "読み取り始める")
+        isLoading.value = true
         cityList.clear()
         weatherList.clear()
         cityList.addAll(weatherFavoriteRepository.getFavoriteList().await())
@@ -41,6 +43,8 @@ class FavoriteViewModel(
             weatherList.add(getWeather(it.cityId))
             Log.d("FavoriteViewModel", it.cityId.name)
         }
+        isLoading.value = false
+        Log.d("FavoriteViewModel", "読み取り終わり")
     }
 
     suspend fun insertFavorite(cityId: CityId) {
