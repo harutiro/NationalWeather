@@ -10,7 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -20,6 +22,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.entities.BottomNavigationItem
 import net.harutiro.nationalweather.core.presenter.BottomNavigationBar
@@ -27,10 +33,17 @@ import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.core.presenter.favorite.page.FavoritePage
 import net.harutiro.nationalweather.core.presenter.home.page.HomePage
+import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class
+)
 @Composable
 fun BottomNavigationBarRouter(toDetail: (cityId: CityId) -> Unit){
+
+    val weatherFavoriteRepository = WeatherFavoriteRepository()
+
     val navController = rememberNavController()
 
     val bottomNavigationItems = listOf(
@@ -52,7 +65,15 @@ fun BottomNavigationBarRouter(toDetail: (cityId: CityId) -> Unit){
         )
     )
 
-    var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+    var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
+
+    // お気に入りがある場合はお気に入りタブを選択状態にする
+    LaunchedEffect(Unit) {
+        val favoriteList = weatherFavoriteRepository.getFavoriteList().await()
+        if (favoriteList.isNotEmpty()) {
+            selectedItemIndex = 1
+        }
+    }
 
     Scaffold(
         topBar = {
