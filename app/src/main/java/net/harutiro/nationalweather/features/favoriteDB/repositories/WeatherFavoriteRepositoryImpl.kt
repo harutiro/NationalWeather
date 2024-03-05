@@ -6,11 +6,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.favoriteDB.apis.WeatherFavoriteApi
+import net.harutiro.nationalweather.features.favoriteDB.apis.WeatherFavoriteApiImpl
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
 import java.util.Date
 
 class WeatherFavoriteRepositoryImpl(
-    private val weatherFavoriteApi: WeatherFavoriteApi = WeatherFavoriteApi()
+    private val weatherFavoriteApi: WeatherFavoriteApi = WeatherFavoriteApiImpl()
 ) : WeatherFavoriteRepository{
     @OptIn(DelicateCoroutinesApi::class)
     override fun insertFavorite(cityId: CityId) : Deferred<Result<Unit>>{
@@ -58,6 +59,4 @@ class WeatherFavoriteRepositoryImpl(
             weatherFavoriteApi.getById(cityId) != null
         }
     }
-
-
 }
