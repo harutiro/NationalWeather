@@ -11,21 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.entities.BottomNavigationItem
 import net.harutiro.nationalweather.core.presenter.BottomNavigationBar
@@ -33,8 +23,9 @@ import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.core.presenter.favorite.page.FavoritePage
 import net.harutiro.nationalweather.core.presenter.home.page.HomePage
-import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
+import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
 import androidx.lifecycle.viewmodel.compose.viewModel
+import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
 
 
 @OptIn(
@@ -43,10 +34,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun BottomNavigationBarRouter(
     toDetail: (cityId: CityId) -> Unit,
-    viewModel: BottomNavigationBarRouterViewModel = viewModel()
+    viewModel: BottomNavigationBarRouterViewModel = viewModel(),
+    weatherFavoriteRepository:WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl()
 ){
 
-    val weatherFavoriteRepository = WeatherFavoriteRepository()
 
     val navController = rememberNavController()
 

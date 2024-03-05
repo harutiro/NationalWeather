@@ -1,25 +1,20 @@
 package net.harutiro.nationalweather.core.presenter.favorite.viewModel
 
 import android.util.Log
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
 import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepository
+import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepositoryImpl
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
+import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
 
 class FavoriteViewModel(
-    val weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepository(),
-    val weatherRepository: NationwideWeatherRepository = NationwideWeatherRepository()
+    val weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl(),
+    val weatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl()
 ) : ViewModel(){
 
     val cityList = mutableStateListOf<WeatherFavoriteEntity>()
