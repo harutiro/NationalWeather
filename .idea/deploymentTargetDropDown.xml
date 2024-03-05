@@ -11,27 +11,8 @@
       <entry key="PreviewNationwideWeatherCell (1)">
         <State />
       </entry>
-      <entry key="PreviewNationwideWeatherCell (2)">
-        <State />
-      </entry>
-      <entry key="PreviewPrefectureFavoriteWeatherCell">
-        <State />
-      </entry>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_3a_API_33_arm64-v8a.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-29T16:20:06.686403Z" />
-        </State>
+        <State />
       </entry>
     </value>
   </component>
