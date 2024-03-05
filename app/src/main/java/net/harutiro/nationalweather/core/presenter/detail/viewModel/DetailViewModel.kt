@@ -9,11 +9,13 @@ import kotlinx.coroutines.launch
 import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
 import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepository
+import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepositoryImpl
+import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
 
 class DetailViewModel(
-    val nationwideWeatherRepository: NationwideWeatherRepository = NationwideWeatherRepository(),
-    val weatherFavoriteRepository: WeatherFavoriteRepositoryImpl = WeatherFavoriteRepositoryImpl()
+    val nationwideWeatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl(),
+    val weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl()
 ) : ViewModel() {
     val weather = mutableStateOf<Weather?>(null)
     val city = mutableStateOf<CityId?>(null)

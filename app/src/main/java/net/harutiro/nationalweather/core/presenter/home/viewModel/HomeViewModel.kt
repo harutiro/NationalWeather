@@ -6,18 +6,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
 import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepository
-import timber.log.Timber
+import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepositoryImpl
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    val nationwideWeatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl()
+) : ViewModel() {
     val weathers = mutableStateListOf<Weather>()
 
     val isLoading = mutableStateOf(false)
     fun getWeather() {
         viewModelScope.launch {
-            val nationwideWeatherRepository = NationwideWeatherRepository()
             // 参照渡しを行い、実際にはRepository側でweathersに追加している
             isLoading.value = true
             Log.d("HomeViewModel", "始まり")
