@@ -46,6 +46,7 @@ https://weather.tsukumijima.net/
 
 ## CI/CDについて
 - GitHub Actionsを使用してやっていきたいが、まだ設定していない
+- Api・Repository間、Repository・UseCase間はDIを行っているためMock化も容易に行える
 
 
 
