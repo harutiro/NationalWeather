@@ -5,10 +5,9 @@ NationalWeather (お天気アプリ)
 全国の天気予報を取得したり、詳細の天気を取得したり、お気に入り保存をすることができるアプリです。
 
 ## バージョン関係
-- kotlinCompilerExtensionVersion 1.5.4
-- org.jetbrains.kotlin.android 1.9.20
+- org.jetbrains.kotlin.android 2.1.20
 - Java 17
-- Android Studio Hedgehog | 2023.1.1 Patch 2
+- Android Studio Meerkat | 2024.3.1 Patch 1
 
 ## 機能
 - 全国の天気予報を取得
@@ -65,6 +64,10 @@ make ktlint-format
 # コードのルール違反をチェックする
 make ktlint-check
 ```
+
+## パッケージ名の変更方法
+以下のURLが参考になります。
+https://codeforfun.jp/android-studio-how-to-change-package-name/
 
 
 
