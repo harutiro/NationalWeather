@@ -11,11 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
+import net.harutiro.nationalweather.core.entities.TopAppBarState
 import net.harutiro.nationalweather.core.presenter.detail.viewModel.DetailViewModel
 import net.harutiro.nationalweather.core.presenter.widget.BookmarkButton
 import net.harutiro.nationalweather.core.utils.DateUtils
@@ -43,6 +45,17 @@ fun DetailPage(
     LaunchedEffect(key1 = viewModel.city) {
         viewModel.getWeather(cityId)
     }
+
+    val topAppBarState =
+        remember {
+            mutableStateOf(
+                TopAppBarState(
+                    title = "詳細ページ",
+                    showBackButton = true,
+                    onBackClick = { toBackPage() },
+                ),
+            )
+        }
 
     topAppBarChanged {
         TopAppBar(

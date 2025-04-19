@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -44,7 +43,6 @@ fun Router(
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
 
     var changedTopAppBarContent: @Composable () -> Unit by remember { mutableStateOf({}) }
 
@@ -82,16 +80,17 @@ fun Router(
 
     Scaffold(
         topBar = {
-            if (currentDestination?.hierarchy?.any {
-                    (it.route?.split("/")?.get(0) ?: "") == BottomNavigationBarRoute.DETAIL.route
-                } == true
-            ) {
-                changedTopAppBarContent()
-            } else {
-                TopAppBar(title = {
-                    val now = DateUtils.getNowString()
-                    Text(text = "$now の全国天気")
-                })
+            val currentRoute = navBackStackEntry?.destination?.route
+            when (currentRoute?.split("/")?.getOrNull(0)) {
+                BottomNavigationBarRoute.DETAIL.route -> {
+                    changedTopAppBarContent()
+                }
+                else -> {
+                    TopAppBar(title = {
+                        val now = DateUtils.getNowString()
+                        Text(text = "$now の全国天気")
+                    })
+                }
             }
         },
         bottomBar = {
