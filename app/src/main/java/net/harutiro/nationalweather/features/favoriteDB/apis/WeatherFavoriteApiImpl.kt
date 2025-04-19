@@ -1,8 +1,8 @@
 package net.harutiro.nationalweather.features.favoriteDB.apis
 
 import net.harutiro.nationalweather.Application
-import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
+import net.harutiro.nationalweather.features.weather.entities.CityId
 
 class WeatherFavoriteApiImpl : WeatherFavoriteApi {
     private val dao = Application.database.weatherFavoriteDao()

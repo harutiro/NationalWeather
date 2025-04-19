@@ -2,7 +2,7 @@ package net.harutiro.nationalweather.features.favoriteDB.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import net.harutiro.nationalweather.features.Weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.CityId
 import java.util.Date
 
 @Entity(tableName = WeatherFavoriteEntity.TABLE_NAME)

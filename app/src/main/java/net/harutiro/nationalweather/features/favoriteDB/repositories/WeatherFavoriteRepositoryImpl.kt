@@ -4,10 +4,10 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.favoriteDB.apis.WeatherFavoriteApi
 import net.harutiro.nationalweather.features.favoriteDB.apis.WeatherFavoriteApiImpl
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
+import net.harutiro.nationalweather.features.weather.entities.CityId
 import java.util.Date
 
 class WeatherFavoriteRepositoryImpl(

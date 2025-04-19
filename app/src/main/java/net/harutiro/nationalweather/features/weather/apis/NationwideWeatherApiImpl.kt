@@ -1,9 +1,9 @@
-package net.harutiro.nationalweather.features.Weather.apis
+package net.harutiro.nationalweather.features.weather.apis
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import net.harutiro.nationalweather.features.Weather.entities.CityId
-import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.Weather
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -43,10 +43,10 @@ class NationwideWeatherApiImpl : NationwideWeatherApi {
             Timber.tag("OkHttp").d(response.body().toString())
             val weather = response.body()
             weather?.cityId = cityId
-            weather ?: Weather(listOf(), "", CityId.tokyo)
+            weather ?: Weather(listOf(), "", CityId.TOKYO)
         } else {
             Timber.tag("OkHttp").d(response.errorBody().toString())
-            Weather(listOf(), "", CityId.tokyo)
+            Weather(listOf(), "", CityId.TOKYO)
         }
     }
 }

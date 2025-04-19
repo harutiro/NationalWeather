@@ -36,11 +36,11 @@ import coil.decode.SvgDecoder
 import net.harutiro.nationalweather.core.presenter.widget.BookmarkButton
 import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.core.widgets.Center
-import net.harutiro.nationalweather.features.Weather.entities.Forecast
-import net.harutiro.nationalweather.features.Weather.entities.Max
-import net.harutiro.nationalweather.features.Weather.entities.Min
-import net.harutiro.nationalweather.features.Weather.entities.Temperature
-import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.entities.Forecast
+import net.harutiro.nationalweather.features.weather.entities.Max
+import net.harutiro.nationalweather.features.weather.entities.Min
+import net.harutiro.nationalweather.features.weather.entities.Temperature
+import net.harutiro.nationalweather.features.weather.entities.Weather
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -237,7 +237,7 @@ fun PreviewPrefectureFavoriteWeatherCell() {
                     Forecast(
                         date = "2021-10-23",
                         image =
-                            net.harutiro.nationalweather.features.Weather.entities.Image(
+                            net.harutiro.nationalweather.features.weather.entities.Image(
                                 title = "晴れ",
                                 url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
                             ),
@@ -259,7 +259,7 @@ fun PreviewPrefectureFavoriteWeatherCell() {
                     Forecast(
                         date = "2021-10-24",
                         image =
-                            net.harutiro.nationalweather.features.Weather.entities.Image(
+                            net.harutiro.nationalweather.features.weather.entities.Image(
                                 title = "晴れ",
                                 url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
                             ),
@@ -281,7 +281,7 @@ fun PreviewPrefectureFavoriteWeatherCell() {
                     Forecast(
                         date = "2021-10-25",
                         image =
-                            net.harutiro.nationalweather.features.Weather.entities.Image(
+                            net.harutiro.nationalweather.features.weather.entities.Image(
                                 title = "晴れ",
                                 url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
                             ),

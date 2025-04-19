@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.presenter.favorite.viewModel.FavoriteViewModel
 import net.harutiro.nationalweather.core.presenter.widget.LoadingPage
-import net.harutiro.nationalweather.features.Weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.CityId
 
 @OptIn(DelicateCoroutinesApi::class, ExperimentalFoundationApi::class)
 @Composable
@@ -55,15 +55,15 @@ fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
             ) {
                 items(
                     viewModel.weatherList.toList(),
-                    key = { it.cityId?.id ?: CityId.tokyo.id },
+                    key = { it.cityId?.id ?: CityId.TOKYO.id },
                 ) {
                     PrefectureFavoriteWeatherCell(
                         modifier = Modifier.animateItemPlacement(),
                         weather = it,
-                        isFavorite = viewModel.checkFavorite(it.cityId ?: CityId.tokyo),
+                        isFavorite = viewModel.checkFavorite(it.cityId ?: CityId.TOKYO),
                         favoriteOnClick = {
                             GlobalScope.launch {
-                                viewModel.updateBookmark(cityId = it.cityId ?: CityId.tokyo) {
+                                viewModel.updateBookmark(cityId = it.cityId ?: CityId.TOKYO) {
                                     scope.launch {
                                         // スナックバーが表示された後にスナックバーが呼ばれたら前のスナックバーをキャンセルする
                                         hostState.currentSnackbarData?.dismiss()

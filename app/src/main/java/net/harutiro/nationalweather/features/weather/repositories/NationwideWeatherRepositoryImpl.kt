@@ -1,4 +1,4 @@
-package net.harutiro.nationalweather.features.Weather.repositories
+package net.harutiro.nationalweather.features.weather.repositories
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import kotlinx.coroutines.Deferred
@@ -8,10 +8,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import net.harutiro.nationalweather.features.Weather.apis.NationwideWeatherApi
-import net.harutiro.nationalweather.features.Weather.apis.NationwideWeatherApiImpl
-import net.harutiro.nationalweather.features.Weather.entities.CityId
-import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.apis.NationwideWeatherApi
+import net.harutiro.nationalweather.features.weather.apis.NationwideWeatherApiImpl
+import net.harutiro.nationalweather.features.weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.Weather
 
 class NationwideWeatherRepositoryImpl(
     private val nationwideWeatherApi: NationwideWeatherApi = NationwideWeatherApiImpl(),

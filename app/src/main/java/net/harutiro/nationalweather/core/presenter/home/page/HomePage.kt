@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import net.harutiro.nationalweather.core.presenter.home.viewModel.HomeViewModel
 import net.harutiro.nationalweather.core.presenter.widget.LoadingPage
-import net.harutiro.nationalweather.features.Weather.entities.CityId
-import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.Weather
 import java.lang.Double.NaN
 
 @Composable
@@ -39,7 +39,7 @@ fun HomePage(
                         Modifier
                             .padding(padding),
                 ) {
-                    items(viewModel.weathers, key = { it.cityId?.id ?: CityId.tokyo.id }) {
+                    items(viewModel.weathers, key = { it.cityId?.id ?: CityId.TOKYO.id }) {
                         NationwideWeatherCell(
                             imageUrl = it.forecasts[0].image.url,
                             tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
@@ -47,7 +47,7 @@ fun HomePage(
                             cityName = Weather.getCityAcquisition(it.title),
                             goDetail = {
                                 Log.d("HomePage", "cityId: ${it.cityId}")
-                                toDetail(it.cityId ?: CityId.tokyo)
+                                toDetail(it.cityId ?: CityId.TOKYO)
                             },
                         )
                     }

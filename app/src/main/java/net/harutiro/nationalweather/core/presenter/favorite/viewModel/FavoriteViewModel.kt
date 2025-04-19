@@ -4,13 +4,13 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import net.harutiro.nationalweather.features.Weather.entities.CityId
-import net.harutiro.nationalweather.features.Weather.entities.Weather
-import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepository
-import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepositoryImpl
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
+import net.harutiro.nationalweather.features.weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.repositories.NationwideWeatherRepository
+import net.harutiro.nationalweather.features.weather.repositories.NationwideWeatherRepositoryImpl
 
 class FavoriteViewModel(
     val weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl(),

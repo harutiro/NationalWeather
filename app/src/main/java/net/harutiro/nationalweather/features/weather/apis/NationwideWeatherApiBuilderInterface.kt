@@ -1,6 +1,6 @@
-package net.harutiro.nationalweather.features.Weather.apis
+package net.harutiro.nationalweather.features.weather.apis
 
-import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.entities.Weather
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -6,9 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import net.harutiro.nationalweather.features.Weather.entities.Weather
-import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepository
-import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepositoryImpl
+import net.harutiro.nationalweather.features.weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.repositories.NationwideWeatherRepository
+import net.harutiro.nationalweather.features.weather.repositories.NationwideWeatherRepositoryImpl
 
 class HomeViewModel(
     val nationwideWeatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl(),

@@ -1,8 +1,8 @@
 package net.harutiro.nationalweather.features.favoriteDB.repositories
 
 import kotlinx.coroutines.Deferred
-import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
+import net.harutiro.nationalweather.features.weather.entities.CityId
 
 interface WeatherFavoriteRepository {
     fun insertFavorite(cityId: CityId): Deferred<Result<Unit>>

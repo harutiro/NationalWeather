@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -26,8 +25,8 @@ import net.harutiro.nationalweather.core.presenter.detail.viewModel.DetailViewMo
 import net.harutiro.nationalweather.core.presenter.widget.BookmarkButton
 import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.core.widgets.ArrowBackButton
-import net.harutiro.nationalweather.features.Weather.entities.CityId
-import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.Weather
 import java.lang.Double.NaN
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -27,9 +27,9 @@ import net.harutiro.nationalweather.core.presenter.detail.page.DetailPage
 import net.harutiro.nationalweather.core.presenter.favorite.page.FavoritePage
 import net.harutiro.nationalweather.core.presenter.home.page.HomePage
 import net.harutiro.nationalweather.core.utils.DateUtils
-import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
+import net.harutiro.nationalweather.features.weather.entities.CityId
 
 @OptIn(
     ExperimentalMaterial3Api::class,
