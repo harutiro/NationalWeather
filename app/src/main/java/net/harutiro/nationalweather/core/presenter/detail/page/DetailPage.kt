@@ -2,14 +2,10 @@ package net.harutiro.nationalweather.core.presenter.detail.page
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -17,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
@@ -32,9 +27,10 @@ import java.lang.Double.NaN
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailPage(
-    toBottomNavigationBar: () -> Unit,
+    toBackPage: () -> Unit,
     cityId: CityId,
     viewModel: DetailViewModel = viewModel(),
+    topAppBarChanged: (content: @Composable () -> Unit) -> Unit,
 ) {
     // スナックバーの表示
     val hostState = remember { SnackbarHostState() }
@@ -48,48 +44,36 @@ fun DetailPage(
         viewModel.getWeather(cityId)
     }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState) },
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    ArrowBackButton {
-                        toBottomNavigationBar()
-                    }
-                },
-                title = {
-                    val cityName = Weather.getCityAcquisition(viewModel.weather.value?.title ?: "")
-                    Text(text = "${cityName}の3日間の天気")
-                },
-                actions = {
-                    BookmarkButton(
-                        isBookmark = viewModel.bookmark.value,
-                    ) {
-                        viewModel.updateBookmark {
-                            scope.launch {
-                                // スナックバーが表示された後にスナックバーが呼ばれたら前のスナックバーをキャンセルする
-                                hostState.currentSnackbarData?.dismiss()
-                                hostState.showSnackbar(it)
-                            }
+    topAppBarChanged {
+        TopAppBar(
+            navigationIcon = {
+                ArrowBackButton {
+                    toBackPage()
+                }
+            },
+            title = {
+                val cityName = Weather.getCityAcquisition(viewModel.weather.value?.title ?: "")
+                Text(text = "${cityName}の3日間の天気")
+            },
+            actions = {
+                BookmarkButton(
+                    isBookmark = viewModel.bookmark.value,
+                ) {
+                    viewModel.updateBookmark {
+                        scope.launch {
+                            // スナックバーが表示された後にスナックバーが呼ばれたら前のスナックバーをキャンセルする
+                            hostState.currentSnackbarData?.dismiss()
+                            hostState.showSnackbar(it)
                         }
                     }
-                },
-            )
-        },
-    ) { padding ->
-        Detail3DaysList(padding = padding)
+                }
+            },
+        )
     }
-}
 
-@Composable
-fun Detail3DaysList(
-    viewModel: DetailViewModel = viewModel(),
-    padding: PaddingValues,
-) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(1),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.padding(padding),
     ) {
         items(viewModel.weather.value?.forecasts ?: emptyList()) {
             DetailWeatherCell(

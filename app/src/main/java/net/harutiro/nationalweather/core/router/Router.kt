@@ -1,6 +1,5 @@
 package net.harutiro.nationalweather.core.router
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -12,12 +11,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import net.harutiro.nationalweather.R
@@ -31,15 +36,17 @@ import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavo
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
 import net.harutiro.nationalweather.features.weather.entities.CityId
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Router(
     viewModel: RouterViewModel = viewModel(),
     weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl(),
 ) {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    var changedTopAppBarContent: @Composable () -> Unit by remember { mutableStateOf({}) }
 
     val bottomNavigationItems =
         listOf(
@@ -61,11 +68,13 @@ fun Router(
             ),
         )
 
+    var selectedRoute by remember { mutableStateOf(BottomNavigationBarRoute.HOME) }
+
     LaunchedEffect(weatherFavoriteRepository) {
         if (!viewModel.isStarted.value) {
             val favoriteList = weatherFavoriteRepository.getFavoriteList().await()
             if (favoriteList.isNotEmpty()) {
-                viewModel.selectedItemIndex.intValue = 1
+                selectedRoute = BottomNavigationBarRoute.FAVORITE
             }
             viewModel.isStarted.value = true
         }
@@ -73,36 +82,40 @@ fun Router(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = {
-                val now = DateUtils.getNowString()
-                Text(text = "$now の全国天気") // 今日の日付(曜日)　の天気(
-            })
+            if (currentDestination?.hierarchy?.any {
+                    (it.route?.split("/")?.get(0) ?: "") == BottomNavigationBarRoute.DETAIL.route
+                } == true
+            ) {
+                changedTopAppBarContent()
+            } else {
+                TopAppBar(title = {
+                    val now = DateUtils.getNowString()
+                    Text(text = "$now の全国天気")
+                })
+            }
         },
         bottomBar = {
             BottomNavigationBar(
                 items = bottomNavigationItems,
-                selectedItemIndex = viewModel.selectedItemIndex.intValue,
+                selectedItemIndex = bottomNavigationItems.indexOfFirst { it.path == selectedRoute },
             ) { index ->
-                viewModel.selectedItemIndex.intValue = index
-                navController.navigate(bottomNavigationItems[index].path.route)
+                selectedRoute = bottomNavigationItems[index].path
+                navController.navigate(selectedRoute.route)
             }
         },
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = bottomNavigationItems[viewModel.selectedItemIndex.intValue].path.route,
+            startDestination = selectedRoute.route,
             modifier =
                 Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
         ) {
             composable(BottomNavigationBarRoute.HOME.route) {
-                HomePage(
-                    toDetail = { cityId ->
-                        Log.d("MainRouter", "cityId: ${cityId.id}")
-                        navController.navigate("${BottomNavigationBarRoute.DETAIL.route}/${cityId.id}")
-                    },
-                )
+                HomePage(toDetail = { cityId ->
+                    navController.navigate("${BottomNavigationBarRoute.DETAIL.route}/${cityId.id}")
+                })
             }
             composable(BottomNavigationBarRoute.FAVORITE.route) {
                 FavoritePage()
@@ -111,19 +124,13 @@ fun Router(
                 BottomNavigationBarRoute.DETAIL.route + "/{cityId}",
                 arguments = listOf(navArgument("cityId") { type = NavType.StringType }),
             ) {
-                val cityId: CityId? =
-                    CityId.idToCityId(
-                        it.arguments?.getString("cityId") ?: "",
-                    )
+                val cityId = CityId.idToCityId(it.arguments?.getString("cityId") ?: "")
                 if (cityId != null) {
                     DetailPage(
                         cityId = cityId,
-                        toBottomNavigationBar = {
-                            navController.popBackStack()
-                        },
+                        toBackPage = { navController.popBackStack() },
+                        topAppBarChanged = { content -> changedTopAppBarContent = content },
                     )
-                } else {
-                    Log.d("MainRouter", "cityId is null")
                 }
             }
         }

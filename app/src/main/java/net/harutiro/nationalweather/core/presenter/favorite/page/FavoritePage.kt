@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,57 +39,50 @@ fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
         viewModel.getFavoriteAll()
     }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState) },
-    ) { padding ->
-        LoadingPage(
-            isLoading = viewModel.isLoading.value,
+    LoadingPage(
+        isLoading = viewModel.isLoading.value,
+    ) {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier =
-                    Modifier
-                        .padding(padding),
+            items(
+                viewModel.weatherList.toList(),
+                key = { it.cityId?.id ?: CityId.TOKYO.id },
             ) {
-                items(
-                    viewModel.weatherList.toList(),
-                    key = { it.cityId?.id ?: CityId.TOKYO.id },
-                ) {
-                    PrefectureFavoriteWeatherCell(
-                        modifier = Modifier.animateItemPlacement(),
-                        weather = it,
-                        isFavorite = viewModel.checkFavorite(it.cityId ?: CityId.TOKYO),
-                        favoriteOnClick = {
-                            GlobalScope.launch {
-                                viewModel.updateBookmark(cityId = it.cityId ?: CityId.TOKYO) {
-                                    scope.launch {
-                                        // スナックバーが表示された後にスナックバーが呼ばれたら前のスナックバーをキャンセルする
-                                        hostState.currentSnackbarData?.dismiss()
-                                        hostState.showSnackbar(it)
-                                    }
+                PrefectureFavoriteWeatherCell(
+                    modifier = Modifier.animateItem(fadeInSpec = null, fadeOutSpec = null),
+                    weather = it,
+                    isFavorite = viewModel.checkFavorite(it.cityId ?: CityId.TOKYO),
+                    favoriteOnClick = {
+                        GlobalScope.launch {
+                            viewModel.updateBookmark(cityId = it.cityId ?: CityId.TOKYO) {
+                                scope.launch {
+                                    // スナックバーが表示された後にスナックバーが呼ばれたら前のスナックバーをキャンセルする
+                                    hostState.currentSnackbarData?.dismiss()
+                                    hostState.showSnackbar(it)
                                 }
                             }
-                        },
-                    )
-                }
+                        }
+                    },
+                )
             }
+        }
 
-            if (viewModel.weatherList.isEmpty()) {
-                Column(
-                    modifier = Modifier.fillMaxSize().padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        textAlign = TextAlign.Center,
-                        text = stringResource(id = R.string.empty_text),
-                    )
-                    Text(
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge,
-                        text = "(人；´Д｀)ｺﾞﾒﾝﾈ",
-                    )
-                }
+        if (viewModel.weatherList.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Text(
+                    textAlign = TextAlign.Center,
+                    text = stringResource(id = R.string.empty_text),
+                )
+                Text(
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge,
+                    text = "(人；´Д｀)ｺﾞﾒﾝﾈ",
+                )
             }
         }
     }

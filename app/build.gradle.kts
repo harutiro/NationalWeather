@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.kotlinCompose) 
+    alias(libs.plugins.kotlinCompose)
 }
 
 android {
