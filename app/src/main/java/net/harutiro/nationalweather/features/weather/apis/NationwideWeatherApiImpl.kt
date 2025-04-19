@@ -44,11 +44,16 @@ class NationwideWeatherApiImpl : NationwideWeatherApi {
             return if (response.isSuccessful) {
                 Timber.tag("OkHttp").d(response.body().toString())
                 val weather = response.body()
-                weather?.cityId = cityId
-                weather ?: Weather(listOf(), "", CityId.TOKYO)
+                if (weather != null) {
+                    weather.cityId = cityId
+                    weather
+                } else {
+                    Timber.tag("OkHttp").e("Response body is null")
+                    Weather(listOf(), "データの取得に失敗しました", CityId.TOKYO)
+                }
             } else {
-                Timber.tag("OkHttp").d(response.errorBody().toString())
-                Weather(listOf(), "", CityId.TOKYO)
+                Timber.tag("OkHttp").e("API request failed: ${response.code()} - ${response.errorBody()?.string()}")
+                Weather(listOf(), "API接続エラー: ${response.code()}", CityId.TOKYO)
             }
         } catch (e: Exception) {
             Timber.tag("OkHttp").e(e, "Network request failed")
