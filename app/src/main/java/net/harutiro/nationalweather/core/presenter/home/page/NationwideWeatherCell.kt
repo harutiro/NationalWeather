@@ -1,9 +1,7 @@
 package net.harutiro.nationalweather.core.presenter.home.page
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -44,10 +42,10 @@ fun NationwideWeatherCell(
             // ここでDetail画面に遷移する処理を実装する
             goDetail()
         },
-        modifier = Modifier
-            .width(72.dp)
-            .height(172.dp),
-
+        modifier =
+            Modifier
+                .width(72.dp)
+                .height(172.dp),
     ) {
         Center {
             Column(
@@ -57,10 +55,11 @@ fun NationwideWeatherCell(
                 // Image.
                 NationwideWeatherImage(
                     imageUrl = imageUrl,
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(80.dp)
-                        .shadow(1.dp)
+                    modifier =
+                        Modifier
+                            .width(80.dp)
+                            .height(80.dp)
+                            .shadow(1.dp),
                 )
                 // Temperature.
                 NationwideWeatherTemperature(
@@ -81,11 +80,12 @@ fun NationwideWeatherImage(
     imageUrl: String,
     modifier: Modifier,
 ) {
-    val imageLoader = ImageLoader.Builder(LocalContext.current)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+    val imageLoader =
+        ImageLoader.Builder(LocalContext.current)
+            .components {
+                add(SvgDecoder.Factory())
+            }
+            .build()
 
     Image(
         painter = rememberAsyncImagePainter(imageUrl, imageLoader = imageLoader),
@@ -105,32 +105,31 @@ fun NationwideWeatherTemperature(
     ) {
         Text(
             text = "↑$tempMax",
-            style = TextStyle(
-                fontSize = 15.sp,
-                lineHeight = 22.5.sp,
-                color = Color(0xFFFF6969),
-                textAlign = TextAlign.Center,
-            )
+            style =
+                TextStyle(
+                    fontSize = 15.sp,
+                    lineHeight = 22.5.sp,
+                    color = Color(0xFFFF6969),
+                    textAlign = TextAlign.Center,
+                ),
         )
         Text(
             text = "↓$tempMin",
-            style = TextStyle(
-                fontSize = 15.sp,
-                lineHeight = 22.5.sp,
-                color = Color(0xFF2697FF),
-                textAlign = TextAlign.Center,
-            )
+            style =
+                TextStyle(
+                    fontSize = 15.sp,
+                    lineHeight = 22.5.sp,
+                    color = Color(0xFF2697FF),
+                    textAlign = TextAlign.Center,
+                ),
         )
     }
 }
 
 @Composable
-fun NationwideWeatherCityName(
-    cityName: String,
-) {
+fun NationwideWeatherCityName(cityName: String) {
     Text(text = cityName)
 }
-
 
 @Preview
 @Composable
@@ -140,8 +139,9 @@ fun PreviewNationwideWeatherCell() {
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .padding(all = 8.dp)
+        modifier =
+            Modifier
+                .padding(all = 8.dp),
     ) {
         items(4) {
             NationwideWeatherCell(
@@ -151,7 +151,7 @@ fun PreviewNationwideWeatherCell() {
                 cityName = "東京都",
                 goDetail = {
                     Timber.tag("NationwideWeatherCell").d("goDetail")
-                }
+                },
             )
         }
     }

@@ -1,6 +1,5 @@
 package net.harutiro.nationalweather.core.presenter.widget
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
@@ -15,25 +14,26 @@ import net.harutiro.nationalweather.core.widgets.Center
 fun LoadingPage(
     isLoading: Boolean,
     content: @Composable () -> Unit,
-){
-    if(isLoading){
-        Center{
+) {
+    if (isLoading) {
+        Center {
             CircularProgressIndicator(
-                modifier = Modifier
-                    .width(64.dp)
-                    .height(64.dp),
+                modifier =
+                    Modifier
+                        .width(64.dp)
+                        .height(64.dp),
                 color = MaterialTheme.colorScheme.secondary,
                 trackColor = MaterialTheme.colorScheme.surfaceVariant,
             )
         }
-    }else{
+    } else {
         content()
     }
 }
 
 @Preview
 @Composable
-fun LoadingScrollColumnPreview(){
+fun LoadingScrollColumnPreview() {
     LoadingPage(
         isLoading = true,
         content = {},

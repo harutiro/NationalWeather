@@ -35,11 +35,11 @@ fun DetailWeatherCell(
     date: String,
 ) {
     Card(
-        modifier = Modifier
-            .width(72.dp)
-            .height(172.dp),
-
-        ) {
+        modifier =
+            Modifier
+                .width(72.dp)
+                .height(172.dp),
+    ) {
         Center {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -48,16 +48,17 @@ fun DetailWeatherCell(
                 // Image.
                 WeatherImage(
                     imageUrl = imageUrl,
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(80.dp)
-                        .shadow(1.dp)
+                    modifier =
+                        Modifier
+                            .width(80.dp)
+                            .height(80.dp)
+                            .shadow(1.dp),
                 )
 
-                Column (
+                Column(
                     verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
                     horizontalAlignment = Alignment.End,
-                ){
+                ) {
                     // City name.
                     WeatherDate(
                         date = date,
@@ -78,11 +79,12 @@ fun WeatherImage(
     imageUrl: String,
     modifier: Modifier,
 ) {
-    val imageLoader = ImageLoader.Builder(LocalContext.current)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+    val imageLoader =
+        ImageLoader.Builder(LocalContext.current)
+            .components {
+                add(SvgDecoder.Factory())
+            }
+            .build()
 
     Image(
         painter = rememberAsyncImagePainter(imageUrl, imageLoader = imageLoader),
@@ -102,39 +104,39 @@ fun WeatherTemperature(
     ) {
         Text(
             text = "↑$tempMax",
-            style = TextStyle(
-                fontSize = 15.sp,
-                lineHeight = 22.5.sp,
-                color = Color(0xFFFF6969),
-                textAlign = TextAlign.Center,
-            )
+            style =
+                TextStyle(
+                    fontSize = 15.sp,
+                    lineHeight = 22.5.sp,
+                    color = Color(0xFFFF6969),
+                    textAlign = TextAlign.Center,
+                ),
         )
         Text(
             text = "↓$tempMin",
-            style = TextStyle(
-                fontSize = 15.sp,
-                lineHeight = 22.5.sp,
-                color = Color(0xFF2697FF),
-                textAlign = TextAlign.Center,
-            )
+            style =
+                TextStyle(
+                    fontSize = 15.sp,
+                    lineHeight = 22.5.sp,
+                    color = Color(0xFF2697FF),
+                    textAlign = TextAlign.Center,
+                ),
         )
     }
 }
 
 @Composable
-fun WeatherDate(
-    date: String,
-) {
+fun WeatherDate(date: String) {
     Text(
         text = date,
-        style = TextStyle(
-            fontSize = 25.sp,
-            lineHeight = 22.5.sp,
-            textAlign = TextAlign.Center,
-        )
+        style =
+            TextStyle(
+                fontSize = 25.sp,
+                lineHeight = 22.5.sp,
+                textAlign = TextAlign.Center,
+            ),
     )
 }
-
 
 @Preview
 @Composable
@@ -143,7 +145,7 @@ fun PreviewNationwideWeatherCell() {
     LazyVerticalGrid(
         columns = GridCells.Fixed(1),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.padding(all = 16.dp)
+        modifier = Modifier.padding(all = 16.dp),
     ) {
         items(3) {
             DetailWeatherCell(

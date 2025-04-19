@@ -24,5 +24,4 @@ interface WeatherFavoriteDao {
 
     @Query("SELECT * FROM ${WeatherFavoriteEntity.TABLE_NAME} WHERE CityId = :cityId LIMIT 1")
     fun getByCityId(cityId: CityId): WeatherFavoriteEntity?
-
 }

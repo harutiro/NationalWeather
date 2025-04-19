@@ -5,8 +5,12 @@ import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavorite
 
 interface WeatherFavoriteApi {
     fun insert(weatherFavoriteEntity: WeatherFavoriteEntity)
+
     fun update(weatherFavoriteEntity: WeatherFavoriteEntity)
+
     fun delete(weatherFavoriteEntity: WeatherFavoriteEntity)
+
     fun getAll(): List<WeatherFavoriteEntity>
+
     fun getById(cityId: CityId): WeatherFavoriteEntity?
 }

@@ -15,14 +15,13 @@ import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavo
 
 class DetailViewModel(
     val nationwideWeatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl(),
-    val weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl()
+    val weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl(),
 ) : ViewModel() {
     val weather = mutableStateOf<Weather?>(null)
     val city = mutableStateOf<CityId?>(null)
     val bookmark = mutableStateOf(false)
 
     fun getWeather(cityId: CityId) {
-
         Log.d("DetailViewModel", "cityId: $cityId")
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -33,10 +32,8 @@ class DetailViewModel(
         }
     }
 
-    fun updateBookmark(
-        showSnackBar: (String) -> Unit
-    ) {
-        viewModelScope.launch(Dispatchers.IO){
+    fun updateBookmark(showSnackBar: (String) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
             bookmark.value = !bookmark.value
             if (bookmark.value) {
                 weatherFavoriteRepository.insertFavorite(city.value!!).await()

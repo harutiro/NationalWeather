@@ -14,9 +14,8 @@ import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavo
 
 class FavoriteViewModel(
     val weatherFavoriteRepository: WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl(),
-    val weatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl()
-) : ViewModel(){
-
+    val weatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl(),
+) : ViewModel() {
     val cityList = mutableStateListOf<WeatherFavoriteEntity>()
     val weatherList = mutableStateListOf<Weather>()
 
@@ -44,14 +43,14 @@ class FavoriteViewModel(
 
     suspend fun insertFavorite(cityId: CityId) {
         val result = weatherFavoriteRepository.insertFavorite(cityId).await()
-        if(result.isFailure){
+        if (result.isFailure) {
             Log.d("FavoriteViewModel", result.exceptionOrNull().toString())
         }
     }
 
     suspend fun deleteFavorite(cityId: CityId) {
         val result = weatherFavoriteRepository.deleteFavorite(cityId).await()
-        if(result.isFailure){
+        if (result.isFailure) {
             Log.d("FavoriteViewModel", result.exceptionOrNull().toString())
         }
         Log.d("FavoriteViewModel", "delete")
@@ -63,12 +62,12 @@ class FavoriteViewModel(
 
     suspend fun updateBookmark(
         cityId: CityId,
-        showSnackBar: (String) -> Unit
+        showSnackBar: (String) -> Unit,
     ) {
-        if(checkFavorite(cityId)){
+        if (checkFavorite(cityId)) {
             deleteFavorite(cityId)
             showSnackBar("お気に入りから削除しました")
-        }else{
+        } else {
             insertFavorite(cityId)
             showSnackBar("お気に入りに追加しました")
         }

@@ -14,16 +14,16 @@ import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.Weather.entities.Weather
 
 class NationwideWeatherRepositoryImpl(
-    private val nationwideWeatherApi: NationwideWeatherApi = NationwideWeatherApiImpl()
-): NationwideWeatherRepository {
+    private val nationwideWeatherApi: NationwideWeatherApi = NationwideWeatherApiImpl(),
+) : NationwideWeatherRepository {
     @OptIn(DelicateCoroutinesApi::class)
-    override suspend fun getNationwideWeather(weathers:SnapshotStateList<Weather>): Job {
+    override suspend fun getNationwideWeather(weathers: SnapshotStateList<Weather>): Job {
         // 並列処理で取得
         return GlobalScope.launch {
             val jobList = mutableListOf<Deferred<Weather>>()
-            for(i in CityId.entries) {
+            for (i in CityId.entries) {
                 jobList.add(
-                    async { nationwideWeatherApi.getNationwideWeather(i) }
+                    async { nationwideWeatherApi.getNationwideWeather(i) },
                 )
             }
             val getWeather = jobList.awaitAll()
@@ -31,7 +31,7 @@ class NationwideWeatherRepositoryImpl(
         }
     }
 
-    override suspend fun getPrefectureWeather(city :CityId) : Weather {
+    override suspend fun getPrefectureWeather(city: CityId): Weather {
         return nationwideWeatherApi.getNationwideWeather(city)
     }
 }

@@ -11,11 +11,12 @@ import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeat
 import net.harutiro.nationalweather.features.Weather.repositories.NationwideWeatherRepositoryImpl
 
 class HomeViewModel(
-    val nationwideWeatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl()
+    val nationwideWeatherRepository: NationwideWeatherRepository = NationwideWeatherRepositoryImpl(),
 ) : ViewModel() {
     val weathers = mutableStateListOf<Weather>()
 
     val isLoading = mutableStateOf(false)
+
     fun getWeather() {
         viewModelScope.launch {
             // 参照渡しを行い、実際にはRepository側でweathersに追加している

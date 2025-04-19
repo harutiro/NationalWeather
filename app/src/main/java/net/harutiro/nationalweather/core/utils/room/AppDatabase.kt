@@ -9,7 +9,7 @@ import net.harutiro.nationalweather.features.favoriteDB.apis.WeatherFavoriteDao
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
 
 @Database(entities = [WeatherFavoriteEntity::class], version = 1)
-@TypeConverters(CityIdConverter::class,DateConverter::class)
+@TypeConverters(CityIdConverter::class, DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun weatherFavoriteDao(): WeatherFavoriteDao
 }

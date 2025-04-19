@@ -47,7 +47,8 @@ enum class CityId(val id: String) {
     oita("440010"),
     miyazaki("450010"),
     kagoshima("460010"),
-    okinawa("471010");
+    okinawa("471010"),
+    ;
 
     companion object {
         fun idToCityId(id: String): CityId? {
