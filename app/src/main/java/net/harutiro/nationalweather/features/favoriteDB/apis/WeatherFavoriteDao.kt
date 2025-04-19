@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
+import net.harutiro.nationalweather.features.weather.entities.CityId
 
 @Dao
 interface WeatherFavoriteDao {
@@ -24,5 +24,4 @@ interface WeatherFavoriteDao {
 
     @Query("SELECT * FROM ${WeatherFavoriteEntity.TABLE_NAME} WHERE CityId = :cityId LIMIT 1")
     fun getByCityId(cityId: CityId): WeatherFavoriteEntity?
-
 }

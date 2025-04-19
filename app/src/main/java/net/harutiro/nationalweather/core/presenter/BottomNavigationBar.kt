@@ -1,8 +1,5 @@
 package net.harutiro.nationalweather.core.presenter
 
-
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -11,31 +8,23 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.entities.BottomNavigationItem
 import net.harutiro.nationalweather.core.router.BottomNavigationBarRoute
-import net.harutiro.nationalweather.core.presenter.favorite.page.FavoritePage
-import net.harutiro.nationalweather.core.presenter.home.page.HomePage
 import net.harutiro.nationalweather.ui.theme.NationalWeatherTheme
+
 @Composable
 fun BottomNavigationBar(
     items: List<BottomNavigationItem>,
     selectedItemIndex: Int,
-    onItemSelected: (Int) -> Unit
+    onItemSelected: (Int) -> Unit,
 ) {
     NavigationBar {
         items.forEachIndexed { index, screen ->
@@ -50,7 +39,7 @@ fun BottomNavigationBar(
                         unselectedIcon = screen.unselectedIcon,
                         index = index,
                         selectedItemIndex = selectedItemIndex,
-                        contentDescription = screen.title
+                        contentDescription = screen.title,
                     )
                 },
                 label = { Text(screen.title) },
@@ -67,7 +56,7 @@ private fun BadgeIcon(
     unselectedIcon: ImageVector,
     index: Int,
     selectedItemIndex: Int,
-    contentDescription: String
+    contentDescription: String,
 ) {
     BadgedBox(
         badge = {
@@ -81,11 +70,11 @@ private fun BadgeIcon(
                     Badge()
                 }
             }
-        }
+        },
     ) {
         Icon(
             imageVector = if (index == selectedItemIndex) selectedIcon else unselectedIcon,
-            contentDescription = contentDescription
+            contentDescription = contentDescription,
         )
     }
 }
@@ -95,26 +84,27 @@ private fun BadgeIcon(
 fun GreetingPreview() {
     NationalWeatherTheme {
         BottomNavigationBar(
-            items = listOf(
-                BottomNavigationItem(
-                    title = stringResource(id = R.string.home),
-                    selectedIcon = Icons.Filled.Home,
-                    unselectedIcon = Icons.Filled.Home,
-                    hasNews = false,
-                    badgeCount = null,
-                    path = BottomNavigationBarRoute.HOME
+            items =
+                listOf(
+                    BottomNavigationItem(
+                        title = stringResource(id = R.string.home),
+                        selectedIcon = Icons.Filled.Home,
+                        unselectedIcon = Icons.Filled.Home,
+                        hasNews = false,
+                        badgeCount = null,
+                        path = BottomNavigationBarRoute.HOME,
+                    ),
+                    BottomNavigationItem(
+                        title = stringResource(id = R.string.favorite),
+                        selectedIcon = Icons.Filled.Favorite,
+                        unselectedIcon = Icons.Filled.Favorite,
+                        hasNews = false,
+                        badgeCount = null,
+                        path = BottomNavigationBarRoute.FAVORITE,
+                    ),
                 ),
-                BottomNavigationItem(
-                    title = stringResource(id = R.string.favorite),
-                    selectedIcon = Icons.Filled.Favorite,
-                    unselectedIcon = Icons.Filled.Favorite,
-                    hasNews = false,
-                    badgeCount = null,
-                    path = BottomNavigationBarRoute.FAVORITE
-                )
-            ),
             selectedItemIndex = 0,
-            onItemSelected = {}
+            onItemSelected = {},
         )
     }
 }

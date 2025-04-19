@@ -14,14 +14,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import net.harutiro.nationalweather.core.presenter.home.viewModel.HomeViewModel
 import net.harutiro.nationalweather.core.presenter.widget.LoadingPage
-import net.harutiro.nationalweather.features.Weather.entities.CityId
-import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.Weather
 import java.lang.Double.NaN
 
 @Composable
-fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = viewModel()) {
-
-    LaunchedEffect(key1 = viewModel.weathers){
+fun HomePage(
+    toDetail: (cityId: CityId) -> Unit,
+    viewModel: HomeViewModel = viewModel(),
+) {
+    LaunchedEffect(key1 = viewModel.weathers) {
         viewModel.getWeather()
     }
 
@@ -33,10 +35,11 @@ fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = view
                     columns = GridCells.Fixed(2),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier
-                        .padding(padding)
+                    modifier =
+                        Modifier
+                            .padding(padding),
                 ) {
-                    items(viewModel.weathers, key = { it.cityId?.id ?: CityId.tokyo.id }) {
+                    items(viewModel.weathers, key = { it.cityId?.id ?: CityId.TOKYO.id }) {
                         NationwideWeatherCell(
                             imageUrl = it.forecasts[0].image.url,
                             tempMax = it.forecasts[0].temperature.max.celsius ?: NaN,
@@ -44,12 +47,12 @@ fun HomePage(toDetail: (cityId: CityId) -> Unit ,viewModel: HomeViewModel = view
                             cityName = Weather.getCityAcquisition(it.title),
                             goDetail = {
                                 Log.d("HomePage", "cityId: ${it.cityId}")
-                                toDetail(it.cityId ?:CityId.tokyo)
-                            }
+                                toDetail(it.cityId ?: CityId.TOKYO)
+                            },
                         )
                     }
                 }
-            }
+            },
         )
     }
 }

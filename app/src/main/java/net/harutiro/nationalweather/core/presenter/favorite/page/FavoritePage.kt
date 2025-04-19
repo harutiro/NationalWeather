@@ -2,7 +2,6 @@ package net.harutiro.nationalweather.core.presenter.favorite.page
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,17 +24,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import net.harutiro.nationalweather.R
 import net.harutiro.nationalweather.core.presenter.favorite.viewModel.FavoriteViewModel
 import net.harutiro.nationalweather.core.presenter.widget.LoadingPage
-import net.harutiro.nationalweather.features.Weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.CityId
 
 @OptIn(DelicateCoroutinesApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
-
     // スナックバーの表示
     val hostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -44,28 +41,29 @@ fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
         viewModel.getFavoriteAll()
     }
 
-    Scaffold (
+    Scaffold(
         snackbarHost = { SnackbarHost(hostState) },
-    ){ padding ->
+    ) { padding ->
         LoadingPage(
             isLoading = viewModel.isLoading.value,
         ) {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier
-                    .padding( padding )
+                modifier =
+                    Modifier
+                        .padding(padding),
             ) {
                 items(
                     viewModel.weatherList.toList(),
-                    key = { it.cityId?.id ?: CityId.tokyo.id }
+                    key = { it.cityId?.id ?: CityId.TOKYO.id },
                 ) {
                     PrefectureFavoriteWeatherCell(
                         modifier = Modifier.animateItemPlacement(),
                         weather = it,
-                        isFavorite = viewModel.checkFavorite(it.cityId ?: CityId.tokyo),
+                        isFavorite = viewModel.checkFavorite(it.cityId ?: CityId.TOKYO),
                         favoriteOnClick = {
                             GlobalScope.launch {
-                                viewModel.updateBookmark(cityId = it.cityId ?: CityId.tokyo) {
+                                viewModel.updateBookmark(cityId = it.cityId ?: CityId.TOKYO) {
                                     scope.launch {
                                         // スナックバーが表示された後にスナックバーが呼ばれたら前のスナックバーをキャンセルする
                                         hostState.currentSnackbarData?.dismiss()
@@ -73,7 +71,7 @@ fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
                                     }
                                 }
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -82,7 +80,7 @@ fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
                 Column(
                     modifier = Modifier.fillMaxSize().padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
                         textAlign = TextAlign.Center,
@@ -91,7 +89,7 @@ fun FavoritePage(viewModel: FavoriteViewModel = viewModel()) {
                     Text(
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge,
-                        text ="(人；´Д｀)ｺﾞﾒﾝﾈ"
+                        text = "(人；´Д｀)ｺﾞﾒﾝﾈ",
                     )
                 }
             }

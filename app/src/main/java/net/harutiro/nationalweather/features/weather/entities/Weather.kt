@@ -1,12 +1,12 @@
-package net.harutiro.nationalweather.features.Weather.entities
+package net.harutiro.nationalweather.features.weather.entities
 
 data class Weather(
     var forecasts: List<Forecast>,
     var title: String,
     var cityId: CityId?,
-){
-    companion object{
-        fun getCityAcquisition(title:String): String {
+) {
+    companion object {
+        fun getCityAcquisition(title: String): String {
             return title.split(" ")[0]
         }
     }
@@ -23,6 +23,7 @@ data class Image(
     var url: String,
     var title: String,
 )
+
 data class Temperature(
     var min: Min,
     var max: Max,

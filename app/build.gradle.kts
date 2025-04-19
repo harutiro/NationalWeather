@@ -27,7 +27,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -50,18 +50,18 @@ android {
         }
     }
 
-
     lint {
         // TimberのLogを使わないため、TimberのLintを無効化
-        this.disable += mutableListOf(
-            "TimberArgCount",
-            "TimberArgTypes",
-            "TimberTagLength",
-            "BinaryOperationInTimber",
-            "LogNotTimber",
-            "StringFormatInTimber",
-            "ThrowableNotAtBeginning"
-        )
+        this.disable +=
+            mutableListOf(
+                "TimberArgCount",
+                "TimberArgTypes",
+                "TimberTagLength",
+                "BinaryOperationInTimber",
+                "LogNotTimber",
+                "StringFormatInTimber",
+                "ThrowableNotAtBeginning",
+            )
     }
 }
 
@@ -92,8 +92,7 @@ dependencies {
     implementation("io.coil-kt:coil-svg:2.5.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.compose.material:material-icons-extended:1.6.2")
-    implementation ("com.google.accompanist:accompanist-swiperefresh:0.34.0")
-
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.34.0")
 
     // Retrofit
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
@@ -105,5 +104,5 @@ dependencies {
     // room
     implementation("androidx.room:room-runtime:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
-
+    testImplementation(kotlin("test"))
 }

@@ -1,7 +1,7 @@
 package net.harutiro.nationalweather.core.utils.room.typeConverter
 
 import androidx.room.TypeConverter
-import net.harutiro.nationalweather.features.Weather.entities.CityId
+import net.harutiro.nationalweather.features.weather.entities.CityId
 
 class CityIdConverter {
     @TypeConverter

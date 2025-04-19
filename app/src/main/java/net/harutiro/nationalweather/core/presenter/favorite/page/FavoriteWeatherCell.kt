@@ -36,41 +36,45 @@ import coil.decode.SvgDecoder
 import net.harutiro.nationalweather.core.presenter.widget.BookmarkButton
 import net.harutiro.nationalweather.core.utils.DateUtils
 import net.harutiro.nationalweather.core.widgets.Center
-import net.harutiro.nationalweather.features.Weather.entities.Forecast
-import net.harutiro.nationalweather.features.Weather.entities.Max
-import net.harutiro.nationalweather.features.Weather.entities.Min
-import net.harutiro.nationalweather.features.Weather.entities.Temperature
-import net.harutiro.nationalweather.features.Weather.entities.Weather
+import net.harutiro.nationalweather.features.weather.entities.Forecast
+import net.harutiro.nationalweather.features.weather.entities.Max
+import net.harutiro.nationalweather.features.weather.entities.Min
+import net.harutiro.nationalweather.features.weather.entities.Temperature
+import net.harutiro.nationalweather.features.weather.entities.Weather
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrefectureFavoriteWeatherCell(
     modifier: Modifier = Modifier,
-    weather:Weather,
+    weather: Weather,
     isFavorite: Boolean,
     favoriteOnClick: () -> Unit,
-){
-    ElevatedCard (
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-        modifier = modifier
-            .wrapContentHeight(),
+) {
+    ElevatedCard(
+        elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = 6.dp,
+            ),
+        modifier =
+            modifier
+                .wrapContentHeight(),
         content = {
             Column(
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .wrapContentSize()
+                modifier =
+                    Modifier
+                        .wrapContentHeight()
+                        .wrapContentSize(),
             ) {
                 TopAppBar(
                     title = {
                         Text(
                             text = weather.title,
-                            style = TextStyle(
-                                fontSize = 20.sp,
-                                lineHeight = 30.sp,
-                                textAlign = TextAlign.Center,
-                            )
+                            style =
+                                TextStyle(
+                                    fontSize = 20.sp,
+                                    lineHeight = 30.sp,
+                                    textAlign = TextAlign.Center,
+                                ),
                         )
                     },
                     actions = {
@@ -82,7 +86,7 @@ fun PrefectureFavoriteWeatherCell(
                     },
                 )
 
-                for(dayWeather in weather.forecasts){
+                for (dayWeather in weather.forecasts) {
                     FavoriteWeatherCell(
                         imageUrl = dayWeather.image.url,
                         tempMax = dayWeather.temperature.max.celsius ?: Double.NaN,
@@ -104,11 +108,12 @@ fun FavoriteWeatherCell(
 ) {
     Box(
         // 最小の横幅と縦幅を指定する。
-        modifier = Modifier
-            .background(CardDefaults.cardColors().containerColor)
-            .fillMaxWidth()
-            .height(128.dp)
-        ) {
+        modifier =
+            Modifier
+                .background(CardDefaults.cardColors().containerColor)
+                .fillMaxWidth()
+                .height(128.dp),
+    ) {
         Center {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -117,16 +122,17 @@ fun FavoriteWeatherCell(
                 // Image.
                 WeatherImage(
                     imageUrl = imageUrl,
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(80.dp)
-                        .shadow(1.dp)
+                    modifier =
+                        Modifier
+                            .width(80.dp)
+                            .height(80.dp)
+                            .shadow(1.dp),
                 )
 
-                Column (
+                Column(
                     verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
                     horizontalAlignment = Alignment.End,
-                ){
+                ) {
                     // City name.
                     WeatherDate(
                         date = date,
@@ -147,11 +153,12 @@ fun WeatherImage(
     imageUrl: String,
     modifier: Modifier,
 ) {
-    val imageLoader = ImageLoader.Builder(LocalContext.current)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+    val imageLoader =
+        ImageLoader.Builder(LocalContext.current)
+            .components {
+                add(SvgDecoder.Factory())
+            }
+            .build()
 
     Image(
         painter = rememberAsyncImagePainter(imageUrl, imageLoader = imageLoader),
@@ -171,39 +178,39 @@ fun WeatherTemperature(
     ) {
         Text(
             text = "↑$tempMax",
-            style = TextStyle(
-                fontSize = 15.sp,
-                lineHeight = 22.5.sp,
-                color = Color(0xFFFF6969),
-                textAlign = TextAlign.Center,
-            )
+            style =
+                TextStyle(
+                    fontSize = 15.sp,
+                    lineHeight = 22.5.sp,
+                    color = Color(0xFFFF6969),
+                    textAlign = TextAlign.Center,
+                ),
         )
         Text(
             text = "↓$tempMin",
-            style = TextStyle(
-                fontSize = 15.sp,
-                lineHeight = 22.5.sp,
-                color = Color(0xFF2697FF),
-                textAlign = TextAlign.Center,
-            )
+            style =
+                TextStyle(
+                    fontSize = 15.sp,
+                    lineHeight = 22.5.sp,
+                    color = Color(0xFF2697FF),
+                    textAlign = TextAlign.Center,
+                ),
         )
     }
 }
 
 @Composable
-fun WeatherDate(
-    date: String,
-) {
+fun WeatherDate(date: String) {
     Text(
         text = date,
-        style = TextStyle(
-            fontSize = 25.sp,
-            lineHeight = 22.5.sp,
-            textAlign = TextAlign.Center,
-        )
+        style =
+            TextStyle(
+                fontSize = 25.sp,
+                lineHeight = 22.5.sp,
+                textAlign = TextAlign.Center,
+            ),
     )
 }
-
 
 @Preview
 @Composable
@@ -222,71 +229,85 @@ fun PreviewNationwideWeatherCell() {
 fun PreviewPrefectureFavoriteWeatherCell() {
     // 横幅と縦幅を指定してプレビューを表示する。
 
-    val weather = Weather(
-        title = "東京都",
-        forecasts = listOf(
-            Forecast(
-                date = "2021-10-23",
-                image = net.harutiro.nationalweather.features.Weather.entities.Image(
-                    title = "晴れ",
-                    url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
-                ),
-                temperature = Temperature(
-                    max = Max(
-                        celsius = 30.0,
-                        fahrenheit = null
+    val weather =
+        Weather(
+            title = "東京都",
+            forecasts =
+                listOf(
+                    Forecast(
+                        date = "2021-10-23",
+                        image =
+                            net.harutiro.nationalweather.features.weather.entities.Image(
+                                title = "晴れ",
+                                url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
+                            ),
+                        temperature =
+                            Temperature(
+                                max =
+                                    Max(
+                                        celsius = 30.0,
+                                        fahrenheit = null,
+                                    ),
+                                min =
+                                    Min(
+                                        celsius = 20.0,
+                                        fahrenheit = null,
+                                    ),
+                            ),
+                        telop = "晴れ",
                     ),
-                    min = Min(
-                        celsius = 20.0,
-                        fahrenheit = null
+                    Forecast(
+                        date = "2021-10-24",
+                        image =
+                            net.harutiro.nationalweather.features.weather.entities.Image(
+                                title = "晴れ",
+                                url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
+                            ),
+                        temperature =
+                            Temperature(
+                                max =
+                                    Max(
+                                        celsius = 30.0,
+                                        fahrenheit = null,
+                                    ),
+                                min =
+                                    Min(
+                                        celsius = 20.0,
+                                        fahrenheit = null,
+                                    ),
+                            ),
+                        telop = "晴れ",
+                    ),
+                    Forecast(
+                        date = "2021-10-25",
+                        image =
+                            net.harutiro.nationalweather.features.weather.entities.Image(
+                                title = "晴れ",
+                                url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
+                            ),
+                        temperature =
+                            Temperature(
+                                max =
+                                    Max(
+                                        celsius = 30.0,
+                                        fahrenheit = null,
+                                    ),
+                                min =
+                                    Min(
+                                        celsius = 20.0,
+                                        fahrenheit = null,
+                                    ),
+                            ),
+                        telop = "晴れ",
                     ),
                 ),
-                telop = "晴れ",
-            ),
-            Forecast(
-                date = "2021-10-24",
-                image = net.harutiro.nationalweather.features.Weather.entities.Image(
-                    title = "晴れ",
-                    url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
-                ),
-                temperature = Temperature(
-                    max = Max(
-                        celsius = 30.0,
-                        fahrenheit = null
-                    ),
-                    min = Min(
-                        celsius = 20.0,
-                        fahrenheit = null
-                    ),
-                ),
-                telop = "晴れ",
-            ),
-            Forecast(
-                date = "2021-10-25",
-                image = net.harutiro.nationalweather.features.Weather.entities.Image(
-                    title = "晴れ",
-                    url = "https://www.jma.go.jp/bosai/forecast/img/100.svg",
-                ),
-                temperature = Temperature(
-                    max = Max(
-                        celsius = 30.0,
-                        fahrenheit = null
-                    ),
-                    min = Min(
-                        celsius = 20.0,
-                        fahrenheit = null
-                    ),
-                ),
-                telop = "晴れ",
-            ),
-        ),
-        cityId = null,
-    )
+            cityId = null,
+        )
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(1),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.padding( all = 8.dp)
+        modifier = Modifier.padding(all = 8.dp),
     ) {
         items(3) {
             PrefectureFavoriteWeatherCell(

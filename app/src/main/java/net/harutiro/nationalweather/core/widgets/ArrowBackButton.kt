@@ -7,15 +7,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 
 @Composable
-fun ArrowBackButton(
-    onClick: () -> Unit
-) {
+fun ArrowBackButton(onClick: () -> Unit) {
     IconButton(onClick = {
         onClick()
     }) {
         Icon(
             imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-            contentDescription = "Back"
+            contentDescription = "Back",
         )
     }
 }

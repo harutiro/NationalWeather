@@ -4,42 +4,44 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import net.harutiro.nationalweather.features.Weather.entities.CityId
 import net.harutiro.nationalweather.features.favoriteDB.apis.WeatherFavoriteApi
 import net.harutiro.nationalweather.features.favoriteDB.apis.WeatherFavoriteApiImpl
 import net.harutiro.nationalweather.features.favoriteDB.entities.WeatherFavoriteEntity
+import net.harutiro.nationalweather.features.weather.entities.CityId
 import java.util.Date
 
 class WeatherFavoriteRepositoryImpl(
-    private val weatherFavoriteApi: WeatherFavoriteApi = WeatherFavoriteApiImpl()
-) : WeatherFavoriteRepository{
+    private val weatherFavoriteApi: WeatherFavoriteApi = WeatherFavoriteApiImpl(),
+) : WeatherFavoriteRepository {
     @OptIn(DelicateCoroutinesApi::class)
-    override fun insertFavorite(cityId: CityId) : Deferred<Result<Unit>>{
+    override fun insertFavorite(cityId: CityId): Deferred<Result<Unit>> {
         weatherFavoriteApi.getById(cityId)?.let {
             return GlobalScope.async {
                 Result.failure(IllegalArgumentException("指定されたIDのお気に入りが既に存在します"))
             }
-        }?:run{
+        } ?: run {
             return GlobalScope.async {
-                weatherFavoriteApi.insert(WeatherFavoriteEntity(
-                    id = 0,
-                    cityId = cityId,
-                    createAt = Date(),
-                    updateAt = Date()
-                ))
+                weatherFavoriteApi.insert(
+                    WeatherFavoriteEntity(
+                        id = 0,
+                        cityId = cityId,
+                        createAt = Date(),
+                        updateAt = Date(),
+                    ),
+                )
                 Result.success(Unit)
             }
         }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun deleteFavorite(cityId:CityId): Deferred<Result<Unit>> {
+    override fun deleteFavorite(cityId: CityId): Deferred<Result<Unit>> {
         weatherFavoriteApi.getById(cityId)?.let {
             return GlobalScope.async {
                 weatherFavoriteApi.delete(it)
                 Result.success(Unit)
             }
-        }?:run {
+        } ?: run {
             return GlobalScope.async {
                 Result.failure(IllegalArgumentException("指定されたIDのお気に入りが存在しません"))
             }

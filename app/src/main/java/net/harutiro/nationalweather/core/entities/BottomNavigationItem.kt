@@ -9,5 +9,5 @@ data class BottomNavigationItem(
     val unselectedIcon: ImageVector,
     val hasNews: Boolean,
     val badgeCount: Int? = null,
-    val path: BottomNavigationBarRoute
+    val path: BottomNavigationBarRoute,
 )
