@@ -1,5 +1,6 @@
 package net.harutiro.nationalweather.core.router
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -25,6 +26,9 @@ import net.harutiro.nationalweather.core.presenter.favorite.page.FavoritePage
 import net.harutiro.nationalweather.core.presenter.home.page.HomePage
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepositoryImpl
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import net.harutiro.nationalweather.core.presenter.detail.page.DetailPage
 import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavoriteRepository
 
 
@@ -32,9 +36,8 @@ import net.harutiro.nationalweather.features.favoriteDB.repositories.WeatherFavo
     ExperimentalMaterial3Api::class,
 )
 @Composable
-fun BottomNavigationBarRouter(
-    toDetail: (cityId: CityId) -> Unit,
-    viewModel: BottomNavigationBarRouterViewModel = viewModel(),
+fun Router(
+    viewModel: RouterViewModel = viewModel(),
     weatherFavoriteRepository:WeatherFavoriteRepository = WeatherFavoriteRepositoryImpl()
 ){
 
@@ -97,11 +100,32 @@ fun BottomNavigationBarRouter(
         ) {
             composable(BottomNavigationBarRoute.HOME.route) {
                 HomePage(
-                    toDetail = toDetail
+                    toDetail = { cityId ->
+                        Log.d("MainRouter", "cityId: ${cityId.id}")
+                        navController.navigate("${BottomNavigationBarRoute.DETAIL.route}/${cityId.id}")
+                    }
                 )
             }
             composable(BottomNavigationBarRoute.FAVORITE.route) {
                 FavoritePage()
+            }
+            composable(
+                BottomNavigationBarRoute.DETAIL.route + "/{cityId}",
+                arguments = listOf(navArgument("cityId") { type = NavType.StringType })
+            ){
+                val cityId: CityId? = CityId.idToCityId(
+                    it.arguments?.getString("cityId") ?:""
+                )
+                if(cityId != null){
+                    DetailPage(
+                        cityId = cityId,
+                        toBottomNavigationBar = {
+                            navController.popBackStack()
+                        }
+                    )
+                }else{
+                    Log.d("MainRouter", "cityId is null")
+                }
             }
         }
     }
@@ -109,6 +133,7 @@ fun BottomNavigationBarRouter(
 
 enum class BottomNavigationBarRoute(val route: String) {
     HOME("home"),
-    FAVORITE("favorite")
+    FAVORITE("favorite"),
+    DETAIL("detail")
 }
 
