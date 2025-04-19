@@ -38,16 +38,21 @@ class NationwideWeatherApiImpl : NationwideWeatherApi {
             .create(NationwideWeatherApiBuilderInterface::class.java)
 
     override suspend fun getNationwideWeather(cityId: CityId): Weather {
-        val response = weatherService.getWeather(cityId.id)
+        try {
+            val response = weatherService.getWeather(cityId.id)
 
-        return if (response.isSuccessful) {
-            Timber.tag("OkHttp").d(response.body().toString())
-            val weather = response.body()
-            weather?.cityId = cityId
-            weather ?: Weather(listOf(), "", CityId.TOKYO)
-        } else {
-            Timber.tag("OkHttp").d(response.errorBody().toString())
-            Weather(listOf(), "", CityId.TOKYO)
+            return if (response.isSuccessful) {
+                Timber.tag("OkHttp").d(response.body().toString())
+                val weather = response.body()
+                weather?.cityId = cityId
+                weather ?: Weather(listOf(), "", CityId.TOKYO)
+            } else {
+                Timber.tag("OkHttp").d(response.errorBody().toString())
+                Weather(listOf(), "", CityId.TOKYO)
+            }
+        } catch (e: Exception) {
+            Timber.tag("OkHttp").e(e, "Network request failed")
+            return Weather(listOf(), "ネットワークエラー: ${e.message}", CityId.TOKYO)
         }
     }
 }
