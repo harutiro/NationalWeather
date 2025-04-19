@@ -11,32 +11,33 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 
 class NationwideWeatherApiImpl : NationwideWeatherApi {
+    // Timberを使う場合
+    private val loggingInterceptor =
+        HttpLoggingInterceptor {
+            Timber.tag("OkHttp").d(it)
+        }.apply {
+            level = HttpLoggingInterceptor.Level.BASIC
+        }
+
+    val client =
+        OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+    val moshi =
+        Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
+    val weatherService =
+        Retrofit.Builder()
+            .baseUrl("https://weather.tsukumijima.net")
+            .client(client)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(NationwideWeatherApiBuilderInterface::class.java)
+
     override suspend fun getNationwideWeather(cityId: CityId): Weather {
-        // Timberを使う場合
-        val logging =
-            HttpLoggingInterceptor {
-                Timber.tag("OkHttp").d(it)
-            }
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC)
-
-        val client =
-            OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build()
-
-        val moshi =
-            Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-
-        val weatherService =
-            Retrofit.Builder()
-                .baseUrl("https://weather.tsukumijima.net")
-                .client(client)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-                .create(NationwideWeatherApiBuilderInterface::class.java)
-
         val response = weatherService.getWeather(cityId.id)
 
         return if (response.isSuccessful) {
